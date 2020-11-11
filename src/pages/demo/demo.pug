@@ -1,8 +1,12 @@
 extends ../base/base
 
+include ../../task/map
+
 block title
   title Кинотеатр
 
 block body
   div(class=["demo"])
-    canvas(class=["demo__canvas"])
+    // canvas(class=["demo__canvas"])
+    // object(class=["task__svg"] type="image/svg+xml" data="./src/data/images/world.svg") Your browser does not support SVG
+    +map()

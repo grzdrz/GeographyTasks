@@ -1,6 +1,7 @@
 .demo {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &_disabled {
     pointer-events: none;
