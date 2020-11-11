@@ -1,0 +1,93 @@
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: url(src/assets/fonts/MaterialIcons/MaterialIcons-Regular.eot);
+  src: url(src/assets/fonts/MaterialIcons/MaterialIcons-Regular.woff2) format("woff2"), url(src/assets/fonts/MaterialIcons/MaterialIcons-Regular.woff) format("woff"), url(src/assets/fonts/MaterialIcons/MaterialIcons-Regular.ttf) format("truetype"); }
+
+@font-face {
+  font-family: "Merriweather";
+  font-style: normal;
+  font-weight: 300;
+  src: url(src/assets/fonts/Merriweather/merriweather-300.eot);
+  src: url(src/assets/fonts/Merriweather/merriweather-300.woff2) format("woff2"), url(src/assets/fonts/Merriweather/merriweather-300.woff) format("woff"), url(src/assets/fonts/Merriweather/merriweather-300.ttf) format("truetype"); }
+
+@font-face {
+  font-family: "Merriweather";
+  font-style: normal;
+  font-weight: normal;
+  src: url(src/assets/fonts/Merriweather/merriweather-regular.eot);
+  src: url(src/assets/fonts/Merriweather/merriweather-regular.woff2) format("woff2"), url(src/assets/fonts/Merriweather/merriweather-regular.woff) format("woff"), url(src/assets/fonts/Merriweather/merriweather-regular.ttf) format("truetype"); }
+
+@font-face {
+  font-family: "Merriweather";
+  font-style: normal;
+  font-weight: bold;
+  src: url(src/assets/fonts/Merriweather/merriweather-bold.eot);
+  src: url(src/assets/fonts/Merriweather/merriweather-bold.woff2) format("woff2"), url(src/assets/fonts/Merriweather/merriweather-bold.woff) format("woff"), url(src/assets/fonts/Merriweather/merriweather-bold.ttf) format("truetype"); }
+
+/* @include setFont('Montserrat', normal, normal, '../assets/fonts/Montserrat/montserrat-regular');
+@include setFont('Montserrat', normal, bold, '../assets/fonts/Montserrat/montserrat-bold');
+@include setFont('Quicksand', normal, normal, '../assets/fonts/Quicksand/quicksand-regular');
+@include setFont('Quicksand', normal, bold, '../assets/fonts/Quicksand/quicksand-bold');
+@include setFont('OpenSans', normal, normal, '../assets/fonts/OpenSans/open-sans-regular');
+@include setFont('OpenSans', normal, bold, '../assets/fonts/OpenSans/open-sans-bold');
+ */
+
+*,
+*:after,
+*:before {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  box-sizing: border-box; }
+
+html {
+  font-family: Merriweather, Georgia, serif;
+  font-size: 16px;
+  color: #343030;
+  background: #f6f3f3; }
+
+html,
+body {
+  min-width: 100%;
+  display: flex;
+  flex-direction: column; }
+
+.index {
+  display: flex;
+  flex-direction: column;
+  padding: 0rem 5%; }
+  .index__title {
+    margin-top: 1.25rem;
+    font-weight: bold;
+    font-size: 1.75rem;
+    color: #181818; }
+  .index__refs-list {
+    display: flex;
+    flex-direction: column;
+    padding-left: 3.125rem;
+    list-style: none; }
+  .index__item {
+    margin-top: 0.625rem;
+    display: flex;
+    align-items: center;
+    position: relative; }
+  .index__item::after {
+    content: '';
+    width: 0.625rem;
+    height: 0.625rem;
+    position: absolute;
+    border-radius: 50%;
+    background: #3f3f3f; }
+  .index__ref {
+    margin-left: 1.25rem; }
+  .index__ref-text {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #3f3f3f; }
+  .index__ref-text:hover {
+    color: #e65050; }
+
+
+/*# sourceMappingURL=index.css.map*/
