@@ -1,4 +1,4 @@
-import Vector from '../assets/Vector';
+import Vector from '../../assets/Vector';
 import IDrawableImage from './IDrawableImage';
 
 class CanvasManager {
@@ -33,7 +33,7 @@ class CanvasManager {
     this.context.moveTo(position.x, position.y);
   };
 
-  draw = (position: Vector, drag: boolean, brushRadius: number): void => {
+  draw = (position: Vector, brushRadius: number): void => {
     /* context.fillStyle = 'black';
     context.fillRect(position.x - brushRadius, position.y - brushRadius, brushRadius * 2, brushRadius * 2); */
 
@@ -42,14 +42,12 @@ class CanvasManager {
     this.context.lineWidth = 50;
     this.context.stroke(); */
 
-    if (drag) {
-      const color = 'rgba(0, 0, 0, 1)';
-      this.context.fillStyle = color;
+    const color = 'rgba(0, 0, 0, 1)';
+    this.context.fillStyle = color;
 
-      this.context.beginPath();
-      this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
-      this.context.fill();
-    }
+    this.context.beginPath();
+    this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
+    this.context.fill();
   };
 
   endDrawing = (): void => {

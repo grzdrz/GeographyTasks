@@ -1,5 +1,5 @@
-import Vector from '../assets/vector';
-import CanvasManager from './canvas-manager';
+import Vector from '../../assets/vector';
+import CanvasManager from './CanvasManager';
 
 class ContourMap {
   public position = new Vector(0, 0);

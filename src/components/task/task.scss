@@ -1,0 +1,17 @@
+/* @import '../dropdown-form/dropdown-form.scss'; */
+
+.task {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  &__canvas {
+    position: absolute;
+  }
+
+  &__dropdown-form {
+    position: absolute;
+  }
+
+  /* color: rgb(78, 92, 124); */
+}

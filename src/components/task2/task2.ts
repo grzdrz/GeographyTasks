@@ -1,5 +1,5 @@
-import Vector from '../assets/Vector';
-import CanvasManager from './canvas-manager';
+import Vector from '../../assets/Vector';
+import CanvasManager from './CanvasManager';
 import constants from './constants';
 
 import './task2.scss';

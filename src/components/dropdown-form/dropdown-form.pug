@@ -1,0 +1,14 @@
+include ../form-input/form-input
+
+mixin dropdown-form()
+  div(class=["dropdown-form"])
+    button(class=["dropdown-form__drop-button"] type="button") 
+      div(class=["dropdown-form__arrow"]) expand_more
+    form(class=["dropdown-form__form"])
+      div(class=["dropdown-form__input"])
+        +form-input()
+      div(class=["dropdown-form__input"])
+        +form-input()
+      div(class=["dropdown-form__input"])
+        +form-input()  
+      button(class=["dropdown-form__save-button"] type="button") save

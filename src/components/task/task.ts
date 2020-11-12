@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import { saveAs } from 'file-saver';
 
-import Vector from '../assets/Vector';
-import CanvasManager from './canvas-manager';
+import Vector from '../../assets/Vector';
+import CanvasManager from './CanvasManager';
 import constants from './constants';
 import IDrawableImage from './IDrawableImage';
 import ContourMap from './ContourMap';
+import DropdownForm from '../dropdown-form/dropdown-form';
 
 import './task.scss';
 
@@ -16,6 +17,7 @@ class Task {
   public canvasManager2: CanvasManager;
   public map: ContourMap;
 
+  public dropdownForm: DropdownForm;
   public saveButton: HTMLButtonElement;
 
   constructor(container: HTMLElement) {
@@ -38,7 +40,9 @@ class Task {
     const mapSize = new Vector(this.canvasManager1.width, this.canvasManager1.height);
     this.map = new ContourMap('./src/data/russia.jpg', mapSize);
 
-    this.saveButton = this.container.querySelector('.task__save-button');
+    const dropdownFormContainer = <HTMLElement>(this.container.querySelector('.task__dropdown-form'));
+    this.dropdownForm = new DropdownForm(dropdownFormContainer);
+    this.saveButton = this.container.querySelector('.dropdown-form__save-button');
   }
 
   setEventsHandlers(): void {
@@ -72,44 +76,19 @@ class Task {
     });
   }
 
-  /* download(data, filename, type) {
-    var file = new Blob([data], { type: type });
-    if (window.navigator.msSaveOrOpenBlob) // IE10+
-      window.navigator.msSaveOrOpenBlob(file, filename);
-    else { // Others
-      var a = document.createElement('a'),
-        url = URL.createObjectURL(file);
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function () {
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }, 0);
-    }
-  } */
-
-  public drag = false;
-
   handleMouseDown = (event: UIEvent) => {
     document.addEventListener('mousemove', this.handleMouseMove);
     document.addEventListener('mouseup', this.handleMouseUp);
     document.addEventListener('touchmove', this.handleMouseMove);
     document.addEventListener('touchend', this.handleMouseUp);
 
-    /* const position = this.calculateMousePosition(event);
-    this.canvasManager.beginDrawing(position); */
-    this.drag = true;
+    const position = this.calculateMousePosition(event);
+    this.canvasManager2.draw(position, 50);
   };
 
   handleMouseMove = (event: UIEvent): void => {
     const position = this.calculateMousePosition(event);
-    /* this.canvasManager.beginDrawing(position);
-    this.canvasManager.draw(position);
-    this.canvasManager.endDrawing(); */
-
-    this.canvasManager2.draw(position, this.drag, 50);
+    this.canvasManager2.draw(position, 50);
   };
 
   handleMouseUp = (): void => {
@@ -118,8 +97,8 @@ class Task {
     document.removeEventListener('touchmove', this.handleMouseMove);
     document.removeEventListener('touchend', this.handleMouseUp);
 
-    /* this.canvasManager.endDrawing(); */
-    this.drag = false;
+    /* const position = this.calculateMousePosition(event);
+    this.canvasManager2.draw(position, 50); */
   };
 
   calculateMousePosition(event: UIEvent): Vector {
@@ -137,7 +116,7 @@ class Task {
 
   /* handlePathMouseOver = (event: UIEvent): void => {
     };
- 
+
     handlePathMouseOut = (event: UIEvent): void => {
     }; */
 }

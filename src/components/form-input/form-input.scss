@@ -1,0 +1,44 @@
+@import '../../assets/constants.scss';
+
+.form-input {
+  width: 100%;
+  display: flex;
+  border: 1px solid black;
+  background: white;
+
+  &__index {
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-right: 1px solid black;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    background: transparent;
+    font-family: Merriweather, Georgia, serif;
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+      border: 0rem solid rgba(255, 255, 255, 0);
+      -webkit-text-fill-color: $color-dark-shade-75;
+      box-shadow: 0 0 0rem 62.5rem rgba(255, 255, 255, 0) inset;
+      transition: background-color 5000s ease-in-out 0s;
+      color: $color-dark-shade-75;
+    }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

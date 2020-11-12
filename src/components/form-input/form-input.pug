@@ -1,0 +1,13 @@
+mixin form-input(options = {})
+  -
+    const {
+      index = 1111,
+    } = options;
+
+  div(class=["form-input"])
+    div(class=["form-input__index"])= index
+    input(
+      class=["form-input__input"]
+      type="text"
+      placeholder="placeholder"
+    )

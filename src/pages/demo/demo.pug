@@ -1,12 +1,12 @@
 extends ../base/base
 
-include ../../task/canvases
+include ../../components/task/task
 
 block title
   title Кинотеатр
 
 block body
   div(class=["demo"])
-    +canvases()
+    +task()
     // object(class=["task__svg"] type="image/svg+xml" data="./src/data/images/world.svg") Your browser does not support SVG
     // +map() include ../../task/map
