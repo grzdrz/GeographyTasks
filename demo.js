@@ -86,10 +86,60 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/file-saver/dist/FileSaver.min.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/file-saver/dist/FileSaver.min.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(a,b){if(true)!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (b),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));else {}})(this,function(){"use strict";function b(a,b){return"undefined"==typeof b?b={autoBom:!1}:"object"!=typeof b&&(console.warn("Deprecated: Expected third argument to be a object"),b={autoBom:!b}),b.autoBom&&/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(a.type)?new Blob(["\uFEFF",a],{type:a.type}):a}function c(b,c,d){var e=new XMLHttpRequest;e.open("GET",b),e.responseType="blob",e.onload=function(){a(e.response,c,d)},e.onerror=function(){console.error("could not download file")},e.send()}function d(a){var b=new XMLHttpRequest;b.open("HEAD",a,!1);try{b.send()}catch(a){}return 200<=b.status&&299>=b.status}function e(a){try{a.dispatchEvent(new MouseEvent("click"))}catch(c){var b=document.createEvent("MouseEvents");b.initMouseEvent("click",!0,!0,window,0,0,0,80,20,!1,!1,!1,!1,0,null),a.dispatchEvent(b)}}var f="object"==typeof window&&window.window===window?window:"object"==typeof self&&self.self===self?self:"object"==typeof global&&global.global===global?global:void 0,a=f.saveAs||("object"!=typeof window||window!==f?function(){}:"download"in HTMLAnchorElement.prototype?function(b,g,h){var i=f.URL||f.webkitURL,j=document.createElement("a");g=g||b.name||"download",j.download=g,j.rel="noopener","string"==typeof b?(j.href=b,j.origin===location.origin?e(j):d(j.href)?c(b,g,h):e(j,j.target="_blank")):(j.href=i.createObjectURL(b),setTimeout(function(){i.revokeObjectURL(j.href)},4E4),setTimeout(function(){e(j)},0))}:"msSaveOrOpenBlob"in navigator?function(f,g,h){if(g=g||f.name||"download","string"!=typeof f)navigator.msSaveOrOpenBlob(b(f,h),g);else if(d(f))c(f,g,h);else{var i=document.createElement("a");i.href=f,i.target="_blank",setTimeout(function(){e(i)})}}:function(a,b,d,e){if(e=e||open("","_blank"),e&&(e.document.title=e.document.body.innerText="downloading..."),"string"==typeof a)return c(a,b,d);var g="application/octet-stream"===a.type,h=/constructor/i.test(f.HTMLElement)||f.safari,i=/CriOS\/[\d]+/.test(navigator.userAgent);if((i||g&&h)&&"object"==typeof FileReader){var j=new FileReader;j.onloadend=function(){var a=j.result;a=i?a:a.replace(/^data:[^;]*;/,"data:attachment/file;"),e?e.location.href=a:location=a,e=null},j.readAsDataURL(a)}else{var k=f.URL||f.webkitURL,l=k.createObjectURL(a);e?e.location=l:location.href=l,e=null,setTimeout(function(){k.revokeObjectURL(l)},4E4)}});f.saveAs=a.saveAs=a, true&&(module.exports=a)});
+
+//# sourceMappingURL=FileSaver.min.js.map
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/assets/fonts.scss":
 /*!******************************************************************************************************************************************************************!*\
   !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/assets/fonts.scss ***!
   \******************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/drawing-options-panel/drawing-options-panel.scss":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/drawing-options-panel/drawing-options-panel.scss ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/dropdown-form/dropdown-form.scss":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/dropdown-form/dropdown-form.scss ***!
+  \********************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/task/task.scss":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/task/task.scss ***!
+  \**************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -112,17 +162,6 @@
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/pages/demo/demo.scss ***!
   \*********************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/task/task.scss":
-/*!***************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/task/task.scss ***!
-  \***************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -410,6 +449,37 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
 /***/ "./src sync recursive \\.(ttf|eot|woff|woff2|svg|png|jpg)$":
 /*!******************************************************!*\
   !*** ./src sync \.(ttf|eot|woff|woff2|svg|png|jpg)$ ***!
@@ -438,7 +508,8 @@ var map = {
 	"./assets/fonts/Merriweather/merriweather-regular.ttf": "./src/assets/fonts/Merriweather/merriweather-regular.ttf",
 	"./assets/fonts/Merriweather/merriweather-regular.woff": "./src/assets/fonts/Merriweather/merriweather-regular.woff",
 	"./assets/fonts/Merriweather/merriweather-regular.woff2": "./src/assets/fonts/Merriweather/merriweather-regular.woff2",
-	"./data/images/world.svg": "./src/data/images/world.svg"
+	"./data/russia.jpg": "./src/data/russia.jpg",
+	"./data/world.svg": "./src/data/world.svg"
 };
 
 
@@ -831,16 +902,646 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/data/images/world.svg":
+/***/ "./src/assets/vector.ts":
+/*!******************************!*\
+  !*** ./src/assets/vector.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-underscore-dangle */
+class Vector {
+    constructor(x, y) {
+        this._x = 0;
+        this._y = 0;
+        this._x = x;
+        this._y = y;
+    }
+    get width() {
+        return this._x;
+    }
+    set width(value) {
+        this._x = value;
+    }
+    get height() {
+        return this._y;
+    }
+    set height(value) {
+        this._y = value;
+    }
+    get x() {
+        return this._x;
+    }
+    set x(value) {
+        this._x = value;
+    }
+    get y() {
+        return this._y;
+    }
+    set y(value) {
+        this._y = value;
+    }
+    sum(vector) {
+        return new Vector(this._x + vector.x, this._y + vector.y);
+    }
+    sumNumber(number) {
+        return new Vector(this._x + number, this._y + number);
+    }
+    subtract(vector) {
+        return new Vector(this._x - vector.x, this._y - vector.y);
+    }
+    multiplyByNumber(number) {
+        return new Vector(this._x * number, this._y * number);
+    }
+    calculateScalarProduct(vector) {
+        return this._x * vector.x + this._y * vector.y;
+    }
+    calculateVectorProjectionOnTargetVector(targetVector) {
+        return this.calculateScalarProduct(targetVector) / targetVector.length;
+    }
+    get length() {
+        return Math.sqrt(this._x * this._x + this._y * this._y);
+    }
+    static calculateVector(length, angle) {
+        const cos = Number.parseFloat(Math.cos(angle).toFixed(6));
+        const sin = Number.parseFloat(Math.sin(angle).toFixed(6));
+        return new Vector(length * cos, length * sin);
+    }
+    rotateVector(angleInRad) {
+        const newX = this._x * Math.cos(angleInRad) - this._y * Math.sin(angleInRad);
+        const newY = this._x * Math.sin(angleInRad) + this._y * Math.cos(angleInRad);
+        return new Vector(newX, newY);
+    }
+}
+exports.default = Vector;
+
+
+/***/ }),
+
+/***/ "./src/compilationOptions.ts":
 /*!***********************************!*\
-  !*** ./src/data/images/world.svg ***!
+  !*** ./src/compilationOptions.ts ***!
   \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const compilationOptions = {
+    forGithubPages: true,
+};
+exports.default = compilationOptions;
+
+
+/***/ }),
+
+/***/ "./src/components/drawing-options-panel/drawing-options-panel.scss":
+/*!*************************************************************************!*\
+  !*** ./src/components/drawing-options-panel/drawing-options-panel.scss ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./drawing-options-panel.scss */ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/drawing-options-panel/drawing-options-panel.scss");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./src/components/drawing-options-panel/drawing-options-panel.ts":
+/*!***********************************************************************!*\
+  !*** ./src/components/drawing-options-panel/drawing-options-panel.ts ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const BrushType_1 = __importDefault(__webpack_require__(/*! ../task/BrushType */ "./src/components/task/BrushType.ts"));
+__webpack_require__(/*! ./drawing-options-panel.scss */ "./src/components/drawing-options-panel/drawing-options-panel.scss");
+class DrawingOptionsPanel {
+    constructor(container, task) {
+        this.handleRadioClick = (event) => {
+            const target = (event.target);
+            const { name } = target.dataset;
+            switch (name) {
+                case 'brush': {
+                    this.task.brushType = BrushType_1.default.brush;
+                    break;
+                }
+                case 'eraser': {
+                    this.task.brushType = BrushType_1.default.eraser;
+                    break;
+                }
+                default: {
+                    this.task.brushType = BrushType_1.default.brush;
+                    break;
+                }
+            }
+        };
+        this.handleOpacityChange = (event) => {
+            const target = (event.target);
+            this.task.opacity = Number.parseFloat(target.value);
+            if (this.task.opacity < 0) {
+                target.value = '0';
+                this.task.opacity = 0;
+            }
+            else if (this.task.opacity > 1) {
+                target.value = '1';
+                this.task.opacity = 1;
+            }
+        };
+        this.handleBrushSizeChange = (event) => {
+            const target = (event.target);
+            this.task.brushRadius = Number.parseInt(target.value, 10);
+            if (this.task.brushRadius < 1) {
+                target.value = '1';
+                this.task.brushRadius = 1;
+            }
+            else if (this.task.brushRadius > 100) {
+                target.value = '100';
+                this.task.brushRadius = 100;
+            }
+        };
+        this.container = container;
+        this.task = task;
+        this.initialize();
+        this.setEventsHandlers();
+        this.brush.checked = true;
+        this.opacityInput.value = '0.5';
+        this.brushSizeInput.value = '50';
+    }
+    initialize() {
+        this.eraser = this.container.querySelector('.drawing-options-panel__eraser');
+        this.brush = this.container.querySelector('.drawing-options-panel__brush');
+        this.opacityInput = this.container.querySelector('.drawing-options-panel__opacity-input');
+        this.brushSizeInput = this.container.querySelector('.drawing-options-panel__brush-size-input');
+    }
+    setEventsHandlers() {
+        this.eraser.addEventListener('click', this.handleRadioClick);
+        this.brush.addEventListener('click', this.handleRadioClick);
+        /* this.opacityInput.addEventListener('change', this.handleOpacityChange);
+        this.brushSizeInput.addEventListener('change', this.handleBrushSizeChange); */
+        this.opacityInput.addEventListener('input', this.handleOpacityChange);
+        this.brushSizeInput.addEventListener('input', this.handleBrushSizeChange);
+    }
+}
+exports.default = DrawingOptionsPanel;
+
+
+/***/ }),
+
+/***/ "./src/components/dropdown-form/dropdown-form.scss":
+/*!*********************************************************!*\
+  !*** ./src/components/dropdown-form/dropdown-form.scss ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./dropdown-form.scss */ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/dropdown-form/dropdown-form.scss");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./src/components/dropdown-form/dropdown-form.ts":
+/*!*******************************************************!*\
+  !*** ./src/components/dropdown-form/dropdown-form.ts ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+__webpack_require__(/*! ./dropdown-form.scss */ "./src/components/dropdown-form/dropdown-form.scss");
+class DropdownForm {
+    constructor(container) {
+        this.isOpened = false;
+        this.handleArrowClick = () => {
+            this.isOpened = !this.isOpened;
+            this.updateState();
+        };
+        this.handleDropdownLeave = (event) => {
+            const target = (event.target);
+            const dropwdown = target.closest('.dropdown-form');
+            if (!dropwdown) {
+                this.isOpened = false;
+                this.updateState();
+            }
+        };
+        this.container = container;
+        this.initialize();
+        this.setEventsHandlers();
+        this.updateState();
+    }
+    initialize() {
+        this.dropButton = this.container.querySelector('.dropdown-form__drop-button');
+        this.arrow = this.container.querySelector('.dropdown-form__arrow');
+        this.form = this.container.querySelector('.dropdown-form__form');
+    }
+    setEventsHandlers() {
+        this.dropButton.addEventListener('click', this.handleArrowClick);
+        document.addEventListener('click', this.handleDropdownLeave);
+    }
+    updateState() {
+        this.arrow.classList.toggle('dropdown-form__arrow_opened', this.isOpened);
+        this.form.classList.toggle('dropdown-form__form_opened', this.isOpened);
+    }
+}
+exports.default = DropdownForm;
+
+
+/***/ }),
+
+/***/ "./src/components/task/BrushType.ts":
+/*!******************************************!*\
+  !*** ./src/components/task/BrushType.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var BrushType;
+(function (BrushType) {
+    BrushType[BrushType["brush"] = 0] = "brush";
+    BrushType[BrushType["eraser"] = 1] = "eraser";
+})(BrushType || (BrushType = {}));
+exports.default = BrushType;
+
+
+/***/ }),
+
+/***/ "./src/components/task/CanvasManager.ts":
+/*!**********************************************!*\
+  !*** ./src/components/task/CanvasManager.ts ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const Vector_1 = __importDefault(__webpack_require__(/*! ../../assets/Vector */ "./src/assets/Vector.ts"));
+const BrushType_1 = __importDefault(__webpack_require__(/*! ./BrushType */ "./src/components/task/BrushType.ts"));
+class CanvasManager {
+    constructor(canvas) {
+        this.draw = (position, brushRadius, brushType) => {
+            if (brushType === BrushType_1.default.brush) {
+                const color = 'rgba(0, 0, 0, 1)';
+                this.context.fillStyle = color;
+                this.context.beginPath();
+                this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
+                this.context.fill();
+            }
+            else if (brushType === BrushType_1.default.eraser) {
+                this.context.clearRect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+            }
+        };
+        this.canvas = canvas;
+        this.context = canvas.getContext('2d');
+        this.initialaze();
+    }
+    initialaze() {
+        this.width = document.documentElement.clientWidth;
+        this.height = document.documentElement.clientHeight;
+        this.canvas.width = this.width;
+        this.canvas.height = this.height;
+    }
+    drawImage(object) {
+        if (object.isImageLoaded) {
+            // точка вращения относительно канваса
+            const x = object.position.x + object.size.width / 2;
+            const y = object.position.y + object.size.height / 2;
+            // центр объекта относительно самого себя
+            const objCenterX = -object.size.width / 2;
+            const objCenterY = -object.size.height / 2;
+            this.context.setTransform(1, 0, 0, 1, x, y);
+            this.context.rotate(object.angle);
+            this.context.drawImage(object.image, objCenterX, objCenterY, object.size.width, object.size.height);
+            this.context.resetTransform();
+        }
+        else { // заглушка, до подгрузки изображения
+            const position = new Vector_1.default(object.position.x, object.position.y);
+            this.drawSquare(position, object.size, 'rgb(12, 123, 222)');
+        }
+    }
+    drawSquare(position, size, color) {
+        this.context.fillStyle = color;
+        this.context.fillRect(position.x, position.y, size.width, size.height);
+    }
+    drawBrush(position, brushRadius, brushType) {
+        this.context.clearRect(0, 0, this.width, this.height);
+        if (brushType === BrushType_1.default.brush) {
+            const color = 'rgba(0, 0, 0, 1)';
+            this.context.fillStyle = color;
+            this.context.lineWidth = 1;
+            this.context.beginPath();
+            this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
+            this.context.closePath();
+            this.context.stroke();
+        }
+        else if (brushType === BrushType_1.default.eraser) {
+            this.context.beginPath();
+            this.context.rect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+            this.context.closePath();
+            this.context.strokeStyle = 'black';
+            this.context.stroke();
+        }
+    }
+}
+exports.default = CanvasManager;
+
+
+/***/ }),
+
+/***/ "./src/components/task/ContourMap.ts":
+/*!*******************************************!*\
+  !*** ./src/components/task/ContourMap.ts ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const vector_1 = __importDefault(__webpack_require__(/*! ../../assets/vector */ "./src/assets/vector.ts"));
+class ContourMap {
+    constructor(imageSrc, size) {
+        this.position = new vector_1.default(0, 0);
+        this.size = new vector_1.default(0, 0);
+        this.angle = 0;
+        this.isImageLoaded = false;
+        this.size = size;
+        this.image = new Image();
+        this.image.src = imageSrc;
+        this.image.onload = () => {
+            this.isImageLoaded = true;
+        };
+    }
+    initialize() {
+    }
+    update(isSelected, gameTime) {
+    }
+    draw(canvas) {
+        /* while (!this.isImageLoaded)  */
+        const timerId = setInterval(() => {
+            if (this.isImageLoaded) {
+                clearInterval(timerId);
+            }
+            canvas.drawImage(this);
+        }, 500);
+    }
+}
+exports.default = ContourMap;
+
+
+/***/ }),
+
+/***/ "./src/components/task/task.scss":
+/*!***************************************!*\
+  !*** ./src/components/task/task.scss ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./task.scss */ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/task/task.scss");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./src/components/task/task.ts":
+/*!*************************************!*\
+  !*** ./src/components/task/task.ts ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+const file_saver_1 = __webpack_require__(/*! file-saver */ "./node_modules/file-saver/dist/FileSaver.min.js");
+const Vector_1 = __importDefault(__webpack_require__(/*! ../../assets/Vector */ "./src/assets/Vector.ts"));
+const CanvasManager_1 = __importDefault(__webpack_require__(/*! ./CanvasManager */ "./src/components/task/CanvasManager.ts"));
+const ContourMap_1 = __importDefault(__webpack_require__(/*! ./ContourMap */ "./src/components/task/ContourMap.ts"));
+const dropdown_form_1 = __importDefault(__webpack_require__(/*! ../dropdown-form/dropdown-form */ "./src/components/dropdown-form/dropdown-form.ts"));
+const drawing_options_panel_1 = __importDefault(__webpack_require__(/*! ../drawing-options-panel/drawing-options-panel */ "./src/components/drawing-options-panel/drawing-options-panel.ts"));
+__webpack_require__(/*! ./task.scss */ "./src/components/task/task.scss");
+const BrushType_1 = __importDefault(__webpack_require__(/*! ./BrushType */ "./src/components/task/BrushType.ts"));
+const compilationOptions_1 = __importDefault(__webpack_require__(/*! ../../compilationOptions */ "./src/compilationOptions.ts"));
+class Task {
+    constructor(container) {
+        this.brushRadius = 50;
+        this.opacity = 0.5;
+        this.brushType = BrushType_1.default.brush;
+        this.handleStartDrawing = (event) => {
+            this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleDrawing);
+            this.cursorCanvasManager.canvas.addEventListener('mouseup', this.handleEndDrawing);
+            this.cursorCanvasManager.canvas.addEventListener('touchmove', this.handleDrawing);
+            this.cursorCanvasManager.canvas.addEventListener('touchend', this.handleEndDrawing);
+            const position = this.calculateMousePosition(event);
+            this.tempCanvasManager.canvas.style.opacity = `${this.opacity}`;
+            if (this.brushType === BrushType_1.default.brush)
+                this.tempCanvasManager.draw(position, this.brushRadius, this.brushType);
+            else if (this.brushType === BrushType_1.default.eraser)
+                this.resultCanvasManager.draw(position, this.brushRadius, this.brushType);
+        };
+        this.handleDrawing = (event) => {
+            const position = this.calculateMousePosition(event);
+            if (this.brushType === BrushType_1.default.brush)
+                this.tempCanvasManager.draw(position, this.brushRadius, this.brushType);
+            else if (this.brushType === BrushType_1.default.eraser)
+                this.resultCanvasManager.draw(position, this.brushRadius, this.brushType);
+        };
+        this.handleEndDrawing = () => {
+            this.cursorCanvasManager.canvas.removeEventListener('mousemove', this.handleDrawing);
+            this.cursorCanvasManager.canvas.removeEventListener('mouseup', this.handleEndDrawing);
+            this.cursorCanvasManager.canvas.removeEventListener('touchmove', this.handleDrawing);
+            this.cursorCanvasManager.canvas.removeEventListener('touchend', this.handleEndDrawing);
+            this.resultCanvasManager.context.globalAlpha = this.opacity;
+            this.resultCanvasManager.context.drawImage(this.tempCanvasManager.canvas, 0, 0);
+            this.tempCanvasManager.context.clearRect(0, 0, this.resultCanvasManager.width, this.resultCanvasManager.height);
+        };
+        this.handleCanvasMouseOver = (event) => {
+            this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleCanvasMouseMove);
+            this.cursorCanvasManager.canvas.addEventListener('mouseout', this.handleCanvasMouseOut);
+            const position = this.calculateMousePosition(event);
+            this.cursorCanvasManager.drawBrush(position, this.brushRadius, this.brushType);
+        };
+        this.handleCanvasMouseMove = (event) => {
+            const position = this.calculateMousePosition(event);
+            this.cursorCanvasManager.drawBrush(position, this.brushRadius, this.brushType);
+        };
+        this.handleCanvasMouseOut = (event) => {
+            this.cursorCanvasManager.canvas.removeEventListener('mousemove', this.handleCanvasMouseMove);
+            this.cursorCanvasManager.canvas.removeEventListener('mouseout', this.handleCanvasMouseOut);
+            this.cursorCanvasManager.context.clearRect(0, 0, this.cursorCanvasManager.width, this.cursorCanvasManager.height);
+        };
+        this.container = container;
+        this.initialize();
+        this.setEventsHandlers();
+        /* this.setSize(); */
+        this.map.draw(this.mapCanvasManager);
+    }
+    initialize() {
+        /* this.canvases = [...this.container.querySelectorAll('.task__canvas')].map((canvas) => canvas as HTMLCanvasElement); */
+        const mapCanvas = (this.container.querySelector('.task__map-canvas'));
+        this.mapCanvasManager = new CanvasManager_1.default(mapCanvas);
+        const resultCanvas = (this.container.querySelector('.task__result-canvas'));
+        this.resultCanvasManager = new CanvasManager_1.default(resultCanvas);
+        /* this.resultCanvasManager.canvas.style.opacity = '0.5'; */
+        /* this.resultCanvasManager.context.globalAlpha = 0.5; */
+        const tempCanvas = (this.container.querySelector('.task__temp-canvas'));
+        this.tempCanvasManager = new CanvasManager_1.default(tempCanvas);
+        this.tempCanvasManager.canvas.style.opacity = `${this.opacity}`;
+        const cursorCanvas = (this.container.querySelector('.task__cursor-canvas'));
+        this.cursorCanvasManager = new CanvasManager_1.default(cursorCanvas);
+        const mapSize = new Vector_1.default(this.mapCanvasManager.width, this.mapCanvasManager.height);
+        this.map = new ContourMap_1.default(`${compilationOptions_1.default.forGithubPages ? '/GeographyTasks' : ''}/src/data/russia.jpg`, mapSize);
+        const dropdownFormContainer = (this.container.querySelector('.task__dropdown-form'));
+        this.dropdownForm = new dropdown_form_1.default(dropdownFormContainer);
+        this.saveButton = this.container.querySelector('.dropdown-form__save-button');
+        const drawingOptionsPanelContainer = (this.container.querySelector('.task__drawing-options-panel'));
+        this.drawingOptionsPanel = new drawing_options_panel_1.default(drawingOptionsPanelContainer, this);
+    }
+    setEventsHandlers() {
+        this.cursorCanvasManager.canvas.ondragstart = () => false;
+        this.cursorCanvasManager.canvas.addEventListener('mousedown', this.handleStartDrawing);
+        this.cursorCanvasManager.canvas.addEventListener('touchstart', this.handleStartDrawing);
+        this.cursorCanvasManager.canvas.addEventListener('mouseover', this.handleCanvasMouseOver);
+        // eslint-disable-next-line fsd/no-function-declaration-in-event-listener
+        this.saveButton.addEventListener('click', () => {
+            const can3 = document.createElement('canvas');
+            can3.width = this.mapCanvasManager.width;
+            can3.height = this.mapCanvasManager.height;
+            const ctx3 = can3.getContext('2d');
+            ctx3.drawImage(this.mapCanvasManager.canvas, 0, 0);
+            ctx3.globalAlpha = 0.5;
+            ctx3.drawImage(this.resultCanvasManager.canvas, 0, 0);
+            ctx3.globalAlpha = 1;
+            let blobImage;
+            can3.toBlob((blob) => {
+                blobImage = blob;
+            });
+            const timerId = setInterval(() => {
+                if (blobImage) {
+                    clearInterval(timerId);
+                    file_saver_1.saveAs(blobImage, 'pretty image.png');
+                }
+            }, 500);
+        });
+    }
+    calculateMousePosition(event) {
+        let x;
+        let y;
+        if (event instanceof TouchEvent) {
+            x = event.changedTouches[0].pageX;
+            y = event.changedTouches[0].pageY;
+        }
+        else if (event instanceof MouseEvent) {
+            x = event.clientX;
+            y = event.clientY;
+        }
+        return new Vector_1.default(x, y);
+    }
+}
+exports.default = Task;
+
+
+/***/ }),
+
+/***/ "./src/data/russia.jpg":
+/*!*****************************!*\
+  !*** ./src/data/russia.jpg ***!
+  \*****************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "src/data/images/world.svg");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "src/data/russia.jpg");
+
+/***/ }),
+
+/***/ "./src/data/world.svg":
+/*!****************************!*\
+  !*** ./src/data/world.svg ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "src/data/world.svg");
 
 /***/ }),
 
@@ -934,143 +1635,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-const task_1 = __importDefault(__webpack_require__(/*! ../../task/task */ "./src/task/task.ts"));
+const task_1 = __importDefault(__webpack_require__(/*! ../../components/task/task */ "./src/components/task/task.ts"));
 __webpack_require__(/*! ../base/base */ "./src/pages/base/base.ts");
 __webpack_require__(/*! ./demo.scss */ "./src/pages/demo/demo.scss");
 const container = document.querySelector('.demo');
 const task = new task_1.default(container);
 
 
-/***/ }),
-
-/***/ "./src/task/task.scss":
-/*!****************************!*\
-  !*** ./src/task/task.scss ***!
-  \****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js!./task.scss */ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/task/task.scss");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-
-
-module.exports = content.locals || {};
-
-/***/ }),
-
-/***/ "./src/task/task.ts":
-/*!**************************!*\
-  !*** ./src/task/task.ts ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const Vector_1 = __importDefault(__webpack_require__(/*! ../assets/Vector */ "./src/assets/Vector.ts"));
-__webpack_require__(/*! ./task.scss */ "./src/task/task.scss");
-class Task {
-    /* public baseWidth: number;
-    public baseHeight: number; */
-    constructor(container) {
-        this.handlePathClick = (event) => {
-            this.countries.forEach((path) => {
-                path.style.fill = 'rgb(78, 92, 124)';
-                /* path.style.transform = 'scale(1, 1)'; */
-            });
-            const target = event.target;
-            target.style.fill = 'red';
-            /* target.style.transform = 'scale(1.2, 1.2)'; */
-        };
-        this.handleMouseDown = (event) => {
-            document.addEventListener('mousemove', this.handleMouseMove);
-            document.addEventListener('mouseup', this.handleMouseUp);
-            document.addEventListener('touchmove', this.handleMouseMove);
-            document.addEventListener('touchend', this.handleMouseUp);
-            const position = this.calculateMousePosition(event);
-            this.canvasManager.beginDrawing(position);
-        };
-        this.handleMouseMove = (event) => {
-            const position = this.calculateMousePosition(event);
-            this.canvasManager.draw(position);
-        };
-        this.handleMouseUp = () => {
-            document.removeEventListener('mousemove', this.handleMouseMove);
-            document.removeEventListener('mouseup', this.handleMouseUp);
-            document.removeEventListener('touchmove', this.handleMouseMove);
-            document.removeEventListener('touchend', this.handleMouseUp);
-            this.canvasManager.endDrawing();
-        };
-        this.container = container;
-        this.initialize();
-        this.setEventsHandlers();
-        /* this.setSize(); */
-    }
-    initialize() {
-        /* const canvas = this.container.querySelector('canvas');
-        this.canvasManager = new CanvasManager(canvas); */
-        this.svg = this.container.querySelector('svg');
-        this.countries = [...this.container.querySelectorAll('path')];
-        this.countries.forEach((path) => {
-            path.style.fill = 'rgb(78, 92, 124)';
-        });
-    }
-    setEventsHandlers() {
-        /* this.canvasManager.canvas.ondragstart = () => false;
-        this.canvasManager.canvas.addEventListener('mousedown', this.handleMouseDown);
-        this.canvasManager.canvas.addEventListener('touchstart', this.handleMouseDown); */
-        this.countries.forEach((path) => {
-            path.addEventListener('click', this.handlePathClick);
-        });
-    }
-    setSize() {
-        const { kx, ky } = this.calculateScaleCoefficient(this.mapContainer.clientWidth, this.mapContainer.clientHeight);
-        this.svg.style.transform = `scale(${kx}, ${kx})`;
-        this.countries.forEach((path) => {
-            path.style.transform = `scale(${kx}, ${kx})`;
-        });
-    }
-    calculateScaleCoefficient(width, height) {
-        const kx = width / this.svg.clientWidth;
-        const ky = height / this.svg.clientHeight;
-        return { kx, ky };
-    }
-    calculateMousePosition(event) {
-        let x;
-        let y;
-        if (event instanceof TouchEvent) {
-            x = event.changedTouches[0].pageX;
-            y = event.changedTouches[0].pageY;
-        }
-        else if (event instanceof MouseEvent) {
-            x = event.clientX;
-            y = event.clientY;
-        }
-        return new Vector_1.default(x, y);
-    }
-}
-exports.default = Task;
-
-
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map?v=933575c51408e078edc7
+//# sourceMappingURL=demo.js.map?v=8f2779eec8e951e3ccc6

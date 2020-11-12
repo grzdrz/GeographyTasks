@@ -427,7 +427,8 @@ var map = {
 	"./assets/fonts/Merriweather/merriweather-regular.ttf": "./src/assets/fonts/Merriweather/merriweather-regular.ttf",
 	"./assets/fonts/Merriweather/merriweather-regular.woff": "./src/assets/fonts/Merriweather/merriweather-regular.woff",
 	"./assets/fonts/Merriweather/merriweather-regular.woff2": "./src/assets/fonts/Merriweather/merriweather-regular.woff2",
-	"./data/images/world.svg": "./src/data/images/world.svg"
+	"./data/russia.jpg": "./src/data/russia.jpg",
+	"./data/world.svg": "./src/data/world.svg"
 };
 
 
@@ -741,16 +742,29 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/data/images/world.svg":
-/*!***********************************!*\
-  !*** ./src/data/images/world.svg ***!
-  \***********************************/
+/***/ "./src/data/russia.jpg":
+/*!*****************************!*\
+  !*** ./src/data/russia.jpg ***!
+  \*****************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "src/data/images/world.svg");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "src/data/russia.jpg");
+
+/***/ }),
+
+/***/ "./src/data/world.svg":
+/*!****************************!*\
+  !*** ./src/data/world.svg ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "src/data/world.svg");
 
 /***/ }),
 
@@ -846,4 +860,4 @@ __webpack_require__(/*! ./index.scss */ "./src/pages/index/index.scss");
 /***/ })
 
 /******/ });
-//# sourceMappingURL=index.js.map?v=933575c51408e078edc7
+//# sourceMappingURL=index.js.map?v=8f2779eec8e951e3ccc6

@@ -45,7 +45,7 @@
 html {
   font-family: Merriweather, Georgia, serif;
   font-size: 16px;
-  color: #343030;
+  color: rgba(31, 32, 65, 0.75);
   background: #f6f3f3; }
 
 html,
