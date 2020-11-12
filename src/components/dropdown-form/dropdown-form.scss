@@ -5,7 +5,7 @@ $dropdown-animation-duration: 1s;
 .dropdown-form {
   width: 100%;
   height: max-content;
-  position: relative;
+  position: absolute;
 
   &__drop-button {
     cursor: pointer;

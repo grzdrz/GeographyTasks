@@ -23,10 +23,10 @@ class CanvasManager {
     this.canvas.height = this.height;
   }
 
-  clear(): void {
-    this.context.fillStyle = 'rgb(179, 179, 179)';
+  /* clear(): void {
+    this.context.fillStyle = 'rgba(0, 0, 0, 0)';
     this.context.fillRect(0, 0, this.width, this.height);
-  }
+  } */
 
   beginDrawing = (position: Vector): void => {
     this.context.beginPath();
@@ -75,6 +75,19 @@ class CanvasManager {
   public drawSquare(position: Vector, size: Vector, color: string): void {
     this.context.fillStyle = color;
     this.context.fillRect(position.x, position.y, size.width, size.height);
+  }
+
+  public drawBrush(position: Vector, brushRadius: number) {
+    this.context.clearRect(0, 0, this.width, this.height);
+
+    const color = 'rgba(0, 0, 0, 1)';
+    this.context.fillStyle = color;
+    this.context.lineWidth = 1;
+
+    this.context.beginPath();
+    this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
+    this.context.closePath();
+    this.context.stroke();
   }
 }
 
