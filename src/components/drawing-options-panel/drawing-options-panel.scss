@@ -1,3 +1,113 @@
 .drawing-options-panel {
+  display: flex;
+  align-items: flex-end;
   padding: 20px;
+
+  &__radio-buttons {
+    width: 120px;
+    height: 50px;
+    position: relative;
+    margin-right: 10px;
+  }
+
+  &__eraser {
+    cursor: pointer;
+    z-index: 2;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    /* right: 50px; */
+    right: 10px;
+    opacity: 0;
+
+    &:checked ~ .drawing-options-panel__eraser-image {
+      background: rgb(121, 83, 172);
+      box-shadow: 1px 4px 13px 3px black;
+    }
+  }
+
+  &__brush {
+    cursor: pointer;
+    z-index: 2;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    opacity: 0;
+
+    &:checked ~ .drawing-options-panel__brush-image {
+      background: rgb(121, 83, 172);
+      box-shadow: 1px 4px 13px 3px black;
+    }
+  }
+
+  &__eraser-image {
+    width: 50px;
+    height: 50px;
+    font-family: 'Material Icons';
+    font-size: 50px;
+    background: white;
+    border-radius: 4px;
+    position: absolute;
+    /* right: 50px; */
+    right: 10px;
+    box-shadow: 0px 3px 7px 0px black;
+    color: black;
+  }
+
+  &__brush-image {
+    width: 50px;
+    height: 50px;
+    font-family: 'Material Icons';
+    font-size: 50px;
+    background: white;
+    border-radius: 4px;
+    position: absolute;
+    box-shadow: 0px 3px 7px 0px black;
+    color: black;
+  }
+
+  &__opacity-input-container {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+  }
+
+  &__opacity-input-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+  }
+
+  &__opacity-input {
+    width: 100%;
+    height: 50px;
+    padding: 5px 15px;
+    font-size: 30px;
+    outline: none;
+    box-shadow: 0px 3px 7px 0px black;
+    border-radius: 4px;
+  }
+
+  &__brush-size-input-container {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__brush-size-input-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+  }
+
+  &__brush-size-input {
+    width: 100%;
+    height: 50px;
+    padding: 5px 15px;
+    font-size: 30px;
+    outline: none;
+    box-shadow: 0px 3px 7px 0px black;
+    border-radius: 4px;
+  }
 }

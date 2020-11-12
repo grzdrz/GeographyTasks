@@ -1,5 +1,13 @@
 mixin drawing-options-panel()
   div(class=["drawing-options-panel"])
-    input(class=["drawing-options-panel__eraser"] name="brush_type" type="radio" data-name="eraser")
-    input(class=["drawing-options-panel__brush"] name="brush_type" type="radio" data-name="brush")
-    input(class=["drawing-options-panel__opacity-input"])
+    div(class=["drawing-options-panel__radio-buttons"])
+      input(class=["drawing-options-panel__eraser"] name="brush_type" type="radio" data-name="eraser")
+      div(class=["drawing-options-panel__eraser-image"]) kitchen
+      input(class=["drawing-options-panel__brush"] name="brush_type" type="radio" data-name="brush")
+      div(class=["drawing-options-panel__brush-image"]) brush
+    div(class=["drawing-options-panel__opacity-input-container"])
+      p(class=["drawing-options-panel__opacity-input-title"]) прозрачность
+      input(class=["drawing-options-panel__opacity-input"] type="number" min="0" max="1" step="0.05")
+    div(class=["drawing-options-panel__brush-size-input-container"])
+      p(class=["drawing-options-panel__brush-size-input-title"]) размер кисти
+      input(class=["drawing-options-panel__brush-size-input"] type="number" min="0" max="100" step="5")

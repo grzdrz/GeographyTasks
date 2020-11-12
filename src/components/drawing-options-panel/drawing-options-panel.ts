@@ -10,6 +10,7 @@ class DrawingOptionsPanel {
   public brush: HTMLInputElement;
 
   public opacityInput: HTMLInputElement;
+  public brushSizeInput: HTMLInputElement;
 
   constructor(container: HTMLElement, task: Task) {
     this.container = container;
@@ -19,21 +20,27 @@ class DrawingOptionsPanel {
     this.setEventsHandlers();
 
     this.brush.checked = true;
+    this.opacityInput.value = '0.5';
+    this.brushSizeInput.value = '50';
   }
 
-  initialize() {
+  initialize(): void {
     this.eraser = this.container.querySelector('.drawing-options-panel__eraser');
     this.brush = this.container.querySelector('.drawing-options-panel__brush');
     this.opacityInput = this.container.querySelector('.drawing-options-panel__opacity-input');
+    this.brushSizeInput = this.container.querySelector('.drawing-options-panel__brush-size-input');
   }
 
-  setEventsHandlers() {
+  setEventsHandlers(): void {
     this.eraser.addEventListener('click', this.handleRadioClick);
     this.brush.addEventListener('click', this.handleRadioClick);
-    this.opacityInput.addEventListener('change', this.handleOpacityChange);
+    /* this.opacityInput.addEventListener('change', this.handleOpacityChange);
+    this.brushSizeInput.addEventListener('change', this.handleBrushSizeChange); */
+    this.opacityInput.addEventListener('input', this.handleOpacityChange);
+    this.brushSizeInput.addEventListener('input', this.handleBrushSizeChange);
   }
 
-  handleRadioClick = (event: Event) => {
+  handleRadioClick = (event: Event): void => {
     const target = <HTMLElement>(event.target);
     const { name } = target.dataset;
 
@@ -53,8 +60,28 @@ class DrawingOptionsPanel {
     }
   };
 
-  handleOpacityChange = () => {
+  handleOpacityChange = (event: Event): void => {
+    const target = <HTMLInputElement>(event.target);
+    this.task.opacity = Number.parseFloat(target.value);
+    if (this.task.opacity < 0) {
+      target.value = '0';
+      this.task.opacity = 0;
+    } else if (this.task.opacity > 1) {
+      target.value = '1';
+      this.task.opacity = 1;
+    }
+  };
 
+  handleBrushSizeChange = (event: Event): void => {
+    const target = <HTMLInputElement>(event.target);
+    this.task.brushRadius = Number.parseInt(target.value, 10);
+    if (this.task.brushRadius < 1) {
+      target.value = '1';
+      this.task.brushRadius = 1;
+    } else if (this.task.brushRadius > 100) {
+      target.value = '100';
+      this.task.brushRadius = 100;
+    }
   };
 }
 
