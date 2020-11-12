@@ -5,10 +5,9 @@
   height: 100%;
   position: relative;
 
-  &__canvas {
-    position: absolute;
-  }
-
+  &__map-canvas,
+  &__result-canvas,
+  &__temp-canvas,
   &__cursor-canvas {
     position: absolute;
   }

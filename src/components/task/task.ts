@@ -13,15 +13,19 @@ import './task.scss';
 class Task {
   public container: HTMLElement;
   public canvases: HTMLCanvasElement[];
+
+  public mapCanvasManager: CanvasManager;
+  public resultCanvasManager: CanvasManager;
   public cursorCanvasManager: CanvasManager;
-  public canvasManager1: CanvasManager;
-  public canvasManager2: CanvasManager;
+  public tempCanvasManager: CanvasManager;
+
   public map: ContourMap;
 
   public dropdownForm: DropdownForm;
   public saveButton: HTMLButtonElement;
 
   public brushRadius = 50;
+  public opacity = 0.5;
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -30,20 +34,27 @@ class Task {
     this.setEventsHandlers();
     /* this.setSize(); */
 
-    this.map.draw(this.canvasManager1);
+    this.map.draw(this.mapCanvasManager);
   }
 
   initialize(): void {
-    this.canvases = [...this.container.querySelectorAll('.task__canvas')].map((canvas) => canvas as HTMLCanvasElement);
-    this.canvasManager1 = new CanvasManager(this.canvases[0]);
-    this.canvasManager2 = new CanvasManager(this.canvases[1]);
-    this.canvases[1].style.opacity = '0.5';
-    /* this.canvasManager2.context.globalAlpha = 0.5; */
+    /* this.canvases = [...this.container.querySelectorAll('.task__canvas')].map((canvas) => canvas as HTMLCanvasElement); */
+    const mapCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__map-canvas'));
+    this.mapCanvasManager = new CanvasManager(mapCanvas);
+
+    const resultCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__result-canvas'));
+    this.resultCanvasManager = new CanvasManager(resultCanvas);
+    /* this.resultCanvasManager.canvas.style.opacity = '0.5'; */
+    /* this.resultCanvasManager.context.globalAlpha = 0.5; */
+
+    const tempCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__temp-canvas'));
+    this.tempCanvasManager = new CanvasManager(tempCanvas);
+    this.tempCanvasManager.canvas.style.opacity = `${this.opacity}`;
 
     const cursorCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__cursor-canvas'));
     this.cursorCanvasManager = new CanvasManager(cursorCanvas);
 
-    const mapSize = new Vector(this.canvasManager1.width, this.canvasManager1.height);
+    const mapSize = new Vector(this.mapCanvasManager.width, this.mapCanvasManager.height);
     this.map = new ContourMap('./src/data/russia.jpg', mapSize);
 
     const dropdownFormContainer = <HTMLElement>(this.container.querySelector('.task__dropdown-form'));
@@ -53,21 +64,21 @@ class Task {
 
   setEventsHandlers(): void {
     this.cursorCanvasManager.canvas.ondragstart = () => false;
-    this.cursorCanvasManager.canvas.addEventListener('mousedown', this.handleMouseDown);
-    this.cursorCanvasManager.canvas.addEventListener('touchstart', this.handleMouseDown);
+    this.cursorCanvasManager.canvas.addEventListener('mousedown', this.handleStartDrawing);
+    this.cursorCanvasManager.canvas.addEventListener('touchstart', this.handleStartDrawing);
 
     this.cursorCanvasManager.canvas.addEventListener('mouseover', this.handleCanvasMouseOver);
 
     // eslint-disable-next-line fsd/no-function-declaration-in-event-listener
     this.saveButton.addEventListener('click', () => {
       const can3 = document.createElement('canvas');
-      can3.width = this.canvasManager1.width;
-      can3.height = this.canvasManager1.height;
+      can3.width = this.mapCanvasManager.width;
+      can3.height = this.mapCanvasManager.height;
       const ctx3 = can3.getContext('2d');
 
-      ctx3.drawImage(this.canvasManager1.canvas, 0, 0);
+      ctx3.drawImage(this.mapCanvasManager.canvas, 0, 0);
       ctx3.globalAlpha = 0.5;
-      ctx3.drawImage(this.canvasManager2.canvas, 0, 0);
+      ctx3.drawImage(this.resultCanvasManager.canvas, 0, 0);
       ctx3.globalAlpha = 1;
 
       let blobImage: Blob;
@@ -84,29 +95,31 @@ class Task {
     });
   }
 
-  handleMouseDown = (event: UIEvent) => {
-    this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleMouseMove);
-    this.cursorCanvasManager.canvas.addEventListener('mouseup', this.handleMouseUp);
-    this.cursorCanvasManager.canvas.addEventListener('touchmove', this.handleMouseMove);
-    this.cursorCanvasManager.canvas.addEventListener('touchend', this.handleMouseUp);
+  handleStartDrawing = (event: UIEvent) => {
+    this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleDrawing);
+    this.cursorCanvasManager.canvas.addEventListener('mouseup', this.handleEndDrawing);
+    this.cursorCanvasManager.canvas.addEventListener('touchmove', this.handleDrawing);
+    this.cursorCanvasManager.canvas.addEventListener('touchend', this.handleEndDrawing);
 
     const position = this.calculateMousePosition(event);
-    this.canvasManager2.draw(position, this.brushRadius);
+    this.tempCanvasManager.canvas.style.opacity = `${this.opacity}`;
+    this.tempCanvasManager.draw(position, this.brushRadius);
   };
 
-  handleMouseMove = (event: UIEvent): void => {
+  handleDrawing = (event: UIEvent): void => {
     const position = this.calculateMousePosition(event);
-    this.canvasManager2.draw(position, this.brushRadius);
+    this.tempCanvasManager.draw(position, this.brushRadius);
   };
 
-  handleMouseUp = (): void => {
-    this.cursorCanvasManager.canvas.removeEventListener('mousemove', this.handleMouseMove);
-    this.cursorCanvasManager.canvas.removeEventListener('mouseup', this.handleMouseUp);
-    this.cursorCanvasManager.canvas.removeEventListener('touchmove', this.handleMouseMove);
-    this.cursorCanvasManager.canvas.removeEventListener('touchend', this.handleMouseUp);
+  handleEndDrawing = (): void => {
+    this.cursorCanvasManager.canvas.removeEventListener('mousemove', this.handleDrawing);
+    this.cursorCanvasManager.canvas.removeEventListener('mouseup', this.handleEndDrawing);
+    this.cursorCanvasManager.canvas.removeEventListener('touchmove', this.handleDrawing);
+    this.cursorCanvasManager.canvas.removeEventListener('touchend', this.handleEndDrawing);
 
-    /* const position = this.calculateMousePosition(event);
-    this.canvasManager2.draw(position, 50); */
+    this.resultCanvasManager.context.globalAlpha = this.opacity;
+    this.resultCanvasManager.context.drawImage(this.tempCanvasManager.canvas, 0, 0);
+    this.tempCanvasManager.context.clearRect(0, 0, this.resultCanvasManager.width, this.resultCanvasManager.height);
   };
 
   calculateMousePosition(event: UIEvent): Vector {

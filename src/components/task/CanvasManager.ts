@@ -77,7 +77,7 @@ class CanvasManager {
     this.context.fillRect(position.x, position.y, size.width, size.height);
   }
 
-  public drawBrush(position: Vector, brushRadius: number) {
+  public drawBrush(position: Vector, brushRadius: number): void {
     this.context.clearRect(0, 0, this.width, this.height);
 
     const color = 'rgba(0, 0, 0, 1)';
