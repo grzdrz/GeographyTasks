@@ -1,10 +1,8 @@
 .demo {
+  width: max-content;
+  height: max-content;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  &_disabled {
-    pointer-events: none;
-    opacity: 0.5;
-  }
+  margin: auto;
 }

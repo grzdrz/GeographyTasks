@@ -1,4 +1,5 @@
 import Vector from '../assets/Vector';
+import IDrawableImage from './IDrawableImage';
 
 class CanvasManager {
   public canvas: HTMLCanvasElement;
@@ -44,6 +45,29 @@ class CanvasManager {
   endDrawing = (): void => {
     this.context.closePath();
   };
+
+  public drawImage(object: IDrawableImage): void {
+    if (object.isImageLoaded) {
+      // точка вращения относительно канваса
+      const x = object.position.x + object.size.width / 2;
+      const y = object.position.y + object.size.height / 2;
+      // центр объекта относительно самого себя
+      const objCenterX = -object.size.width / 2;
+      const objCenterY = -object.size.height / 2;
+      this.context.setTransform(1, 0, 0, 1, x, y);
+      this.context.rotate(object.angle);
+      this.context.drawImage(object.image, objCenterX, objCenterY, object.size.width, object.size.height);
+      this.context.resetTransform();
+    } else { // заглушка, до подгрузки изображения
+      const position = new Vector(object.position.x, object.position.y);
+      this.drawSquare(position, object.size, 'rgb(12, 123, 222)');
+    }
+  }
+
+  public drawSquare(position: Vector, size: Vector, color: string): void {
+    this.context.fillStyle = color;
+    this.context.fillRect(position.x, position.y, size.width, size.height);
+  }
 }
 
 export default CanvasManager;

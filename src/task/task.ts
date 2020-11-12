@@ -1,18 +1,15 @@
 import Vector from '../assets/Vector';
 import CanvasManager from './canvas-manager';
 import constants from './constants';
+import IDrawableImage from './IDrawableImage';
+import ContourMap from './ContourMap';
 
 import './task.scss';
 
 class Task {
   public container: HTMLElement;
   public canvasManager: CanvasManager;
-  public mapContainer: HTMLElement;
-  public countries: SVGPathElement[];
-  public svg: SVGSVGElement;
-
-  /* public baseWidth: number;
-  public baseHeight: number; */
+  public map: ContourMap;
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -20,53 +17,22 @@ class Task {
     this.initialize();
     this.setEventsHandlers();
     /* this.setSize(); */
+
+    this.map.draw(this.canvasManager);
   }
 
   initialize(): void {
-    /* const canvas = this.container.querySelector('canvas');
-    this.canvasManager = new CanvasManager(canvas); */
-
-    this.svg = this.container.querySelector('svg');
-    this.countries = [...this.container.querySelectorAll('path')];
-    this.countries.forEach((path) => {
-      path.style.fill = 'rgb(78, 92, 124)';
-    });
+    const canvas = this.container.querySelector('canvas');
+    this.canvasManager = new CanvasManager(canvas);
+    const mapSize = new Vector(this.canvasManager.width, this.canvasManager.height);
+    this.map = new ContourMap('./src/data/russia.jpg', mapSize);
   }
 
   setEventsHandlers(): void {
-    /* this.canvasManager.canvas.ondragstart = () => false;
+    this.canvasManager.canvas.ondragstart = () => false;
     this.canvasManager.canvas.addEventListener('mousedown', this.handleMouseDown);
-    this.canvasManager.canvas.addEventListener('touchstart', this.handleMouseDown); */
-
-    this.countries.forEach((path) => {
-      path.addEventListener('click', this.handlePathClick);
-    });
+    this.canvasManager.canvas.addEventListener('touchstart', this.handleMouseDown);
   }
-
-  setSize(): void {
-    const { kx, ky } = this.calculateScaleCoefficient(this.mapContainer.clientWidth, this.mapContainer.clientHeight);
-    this.svg.style.transform = `scale(${kx}, ${kx})`;
-    this.countries.forEach((path) => {
-      path.style.transform = `scale(${kx}, ${kx})`;
-    });
-  }
-
-  calculateScaleCoefficient(width: number, height: number): { kx: number, ky: number } {
-    const kx = width / this.svg.clientWidth;
-    const ky = height / this.svg.clientHeight;
-    return { kx, ky };
-  }
-
-  handlePathClick = (event: Event): void => {
-    this.countries.forEach((path) => {
-      path.style.fill = 'rgb(78, 92, 124)';
-      /* path.style.transform = 'scale(1, 1)'; */
-    });
-
-    const target = <HTMLElement>event.target;
-    target.style.fill = 'red';
-    /* target.style.transform = 'scale(1.2, 1.2)'; */
-  };
 
   handleMouseDown = (event: UIEvent) => {
     document.addEventListener('mousemove', this.handleMouseMove);
@@ -104,6 +70,12 @@ class Task {
     }
     return new Vector(x, y);
   }
+
+  /* handlePathMouseOver = (event: UIEvent): void => {
+    };
+
+    handlePathMouseOut = (event: UIEvent): void => {
+    }; */
 }
 
 export default Task;
