@@ -2,7 +2,7 @@ import Vector from '../assets/Vector';
 import CanvasManager from './canvas-manager';
 import constants from './constants';
 
-import './task.scss';
+import './task2.scss';
 
 class Task {
   public container: HTMLElement;
@@ -92,7 +92,7 @@ class Task {
 
   handleMouseMove = (event: UIEvent): void => {
     const position = this.calculateMousePosition(event);
-    this.canvasManager.draw(position);
+    /* this.canvasManager.draw(position); */
   };
 
   handleMouseUp = (): void => {

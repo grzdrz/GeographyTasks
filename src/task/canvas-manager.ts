@@ -12,7 +12,7 @@ class CanvasManager {
     this.context = canvas.getContext('2d');
 
     this.initialaze();
-    this.clear();
+    /* this.clear(); */
   }
 
   initialaze(): void {
@@ -33,13 +33,23 @@ class CanvasManager {
     this.context.moveTo(position.x, position.y);
   };
 
-  draw = (position: Vector): void => {
+  draw = (position: Vector, drag: boolean, brushRadius: number): void => {
     /* context.fillStyle = 'black';
     context.fillRect(position.x - brushRadius, position.y - brushRadius, brushRadius * 2, brushRadius * 2); */
 
-    this.context.lineTo(position.x, position.y);
-    this.context.strokeStyle = 'black';
-    this.context.stroke();
+    /* this.context.lineTo(position.x, position.y);
+    this.context.strokeStyle = 'rgba(0, 0, 0, 0.01)';
+    this.context.lineWidth = 50;
+    this.context.stroke(); */
+
+    if (drag) {
+      const color = 'rgba(0, 0, 0, 1)';
+      this.context.fillStyle = color;
+
+      this.context.beginPath();
+      this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
+      this.context.fill();
+    }
   };
 
   endDrawing = (): void => {

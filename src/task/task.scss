@@ -1,6 +1,10 @@
 .task {
-  &__svg {
-    overflow: auto;
+  width: max-content;
+  height: max-content;
+  position: relative;
+
+  &__canvas {
+    position: absolute;
   }
 
   /* color: rgb(78, 92, 124); */

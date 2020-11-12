@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import Vector from '../assets/Vector';
 import CanvasManager from './canvas-manager';
 import constants from './constants';
@@ -8,7 +9,8 @@ import './task.scss';
 
 class Task {
   public container: HTMLElement;
-  public canvasManager: CanvasManager;
+  public canvasManager1: CanvasManager;
+  public canvasManager2: CanvasManager;
   public map: ContourMap;
 
   constructor(container: HTMLElement) {
@@ -18,21 +20,26 @@ class Task {
     this.setEventsHandlers();
     /* this.setSize(); */
 
-    this.map.draw(this.canvasManager);
+    this.map.draw(this.canvasManager1);
   }
 
   initialize(): void {
-    const canvas = this.container.querySelector('canvas');
-    this.canvasManager = new CanvasManager(canvas);
-    const mapSize = new Vector(this.canvasManager.width, this.canvasManager.height);
+    const canvases = [...this.container.querySelectorAll('.task__canvas')].map((canvas) => canvas as HTMLCanvasElement);
+    this.canvasManager1 = new CanvasManager(canvases[0]);
+    this.canvasManager2 = new CanvasManager(canvases[1]);
+    canvases[1].style.opacity = '0.5';
+
+    const mapSize = new Vector(this.canvasManager1.width, this.canvasManager1.height);
     this.map = new ContourMap('./src/data/russia.jpg', mapSize);
   }
 
   setEventsHandlers(): void {
-    this.canvasManager.canvas.ondragstart = () => false;
-    this.canvasManager.canvas.addEventListener('mousedown', this.handleMouseDown);
-    this.canvasManager.canvas.addEventListener('touchstart', this.handleMouseDown);
+    this.canvasManager2.canvas.ondragstart = () => false;
+    this.canvasManager2.canvas.addEventListener('mousedown', this.handleMouseDown);
+    this.canvasManager2.canvas.addEventListener('touchstart', this.handleMouseDown);
   }
+
+  public drag = false;
 
   handleMouseDown = (event: UIEvent) => {
     document.addEventListener('mousemove', this.handleMouseMove);
@@ -40,13 +47,18 @@ class Task {
     document.addEventListener('touchmove', this.handleMouseMove);
     document.addEventListener('touchend', this.handleMouseUp);
 
-    const position = this.calculateMousePosition(event);
-    this.canvasManager.beginDrawing(position);
+    /* const position = this.calculateMousePosition(event);
+    this.canvasManager.beginDrawing(position); */
+    this.drag = true;
   };
 
   handleMouseMove = (event: UIEvent): void => {
     const position = this.calculateMousePosition(event);
+    /* this.canvasManager.beginDrawing(position);
     this.canvasManager.draw(position);
+    this.canvasManager.endDrawing(); */
+
+    this.canvasManager2.draw(position, this.drag, 50);
   };
 
   handleMouseUp = (): void => {
@@ -55,7 +67,8 @@ class Task {
     document.removeEventListener('touchmove', this.handleMouseMove);
     document.removeEventListener('touchend', this.handleMouseUp);
 
-    this.canvasManager.endDrawing();
+    /* this.canvasManager.endDrawing(); */
+    this.drag = false;
   };
 
   calculateMousePosition(event: UIEvent): Vector {

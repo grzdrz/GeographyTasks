@@ -1,0 +1,14 @@
+.task2 {
+  width: max-content;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+
+  &__svg {
+    overflow: auto;
+  }
+
+  /* color: rgb(78, 92, 124); */
+}
