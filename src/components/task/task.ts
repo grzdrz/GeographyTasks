@@ -7,8 +7,10 @@ import constants from './constants';
 import IDrawableImage from './IDrawableImage';
 import ContourMap from './ContourMap';
 import DropdownForm from '../dropdown-form/dropdown-form';
+import DrawingOptionsPanel from '../drawing-options-panel/drawing-options-panel';
 
 import './task.scss';
+import BrushType from './BrushType';
 
 class Task {
   public container: HTMLElement;
@@ -21,11 +23,14 @@ class Task {
 
   public map: ContourMap;
 
+  public drawingOptionsPanel: DrawingOptionsPanel;
+
   public dropdownForm: DropdownForm;
   public saveButton: HTMLButtonElement;
 
   public brushRadius = 50;
   public opacity = 0.5;
+  public brushType = BrushType.brush;
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -60,6 +65,9 @@ class Task {
     const dropdownFormContainer = <HTMLElement>(this.container.querySelector('.task__dropdown-form'));
     this.dropdownForm = new DropdownForm(dropdownFormContainer);
     this.saveButton = this.container.querySelector('.dropdown-form__save-button');
+
+    const drawingOptionsPanelContainer = <HTMLElement>(this.container.querySelector('.task__drawing-options-panel'));
+    this.drawingOptionsPanel = new DrawingOptionsPanel(drawingOptionsPanelContainer, this);
   }
 
   setEventsHandlers(): void {
@@ -103,12 +111,14 @@ class Task {
 
     const position = this.calculateMousePosition(event);
     this.tempCanvasManager.canvas.style.opacity = `${this.opacity}`;
-    this.tempCanvasManager.draw(position, this.brushRadius);
+    if (this.brushType === BrushType.brush) this.tempCanvasManager.draw(position, this.brushRadius, this.brushType);
+    else if (this.brushType === BrushType.eraser) this.resultCanvasManager.draw(position, this.brushRadius, this.brushType);
   };
 
   handleDrawing = (event: UIEvent): void => {
     const position = this.calculateMousePosition(event);
-    this.tempCanvasManager.draw(position, this.brushRadius);
+    if (this.brushType === BrushType.brush) this.tempCanvasManager.draw(position, this.brushRadius, this.brushType);
+    else if (this.brushType === BrushType.eraser) this.resultCanvasManager.draw(position, this.brushRadius, this.brushType);
   };
 
   handleEndDrawing = (): void => {
@@ -140,12 +150,12 @@ class Task {
     this.cursorCanvasManager.canvas.addEventListener('mouseout', this.handleCanvasMouseOut);
 
     const position = this.calculateMousePosition(event);
-    this.cursorCanvasManager.drawBrush(position, this.brushRadius);
+    this.cursorCanvasManager.drawBrush(position, this.brushRadius, this.brushType);
   };
 
   handleCanvasMouseMove = (event: UIEvent): void => {
     const position = this.calculateMousePosition(event);
-    this.cursorCanvasManager.drawBrush(position, this.brushRadius);
+    this.cursorCanvasManager.drawBrush(position, this.brushRadius, this.brushType);
   };
 
   handleCanvasMouseOut = (event: UIEvent): void => {

@@ -1,4 +1,5 @@
 include ../dropdown-form/dropdown-form
+include ../drawing-options-panel/drawing-options-panel
 
 mixin task()
   div(class=["task"])
@@ -7,4 +8,6 @@ mixin task()
     canvas(class=["task__temp-canvas"])
     canvas(class=["task__cursor-canvas"])
     div(class=["task__dropdown-form"])
-      +dropdown-form
+      +dropdown-form()
+    div(class=["task__drawing-options-panel"])
+      +drawing-options-panel()

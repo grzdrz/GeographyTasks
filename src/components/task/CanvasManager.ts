@@ -1,4 +1,5 @@
 import Vector from '../../assets/Vector';
+import BrushType from './BrushType';
 import IDrawableImage from './IDrawableImage';
 
 class CanvasManager {
@@ -12,7 +13,6 @@ class CanvasManager {
     this.context = canvas.getContext('2d');
 
     this.initialaze();
-    /* this.clear(); */
   }
 
   initialaze(): void {
@@ -23,35 +23,17 @@ class CanvasManager {
     this.canvas.height = this.height;
   }
 
-  /* clear(): void {
-    this.context.fillStyle = 'rgba(0, 0, 0, 0)';
-    this.context.fillRect(0, 0, this.width, this.height);
-  } */
+  draw = (position: Vector, brushRadius: number, brushType: BrushType): void => {
+    if (brushType === BrushType.brush) {
+      const color = 'rgba(0, 0, 0, 1)';
+      this.context.fillStyle = color;
 
-  beginDrawing = (position: Vector): void => {
-    this.context.beginPath();
-    this.context.moveTo(position.x, position.y);
-  };
-
-  draw = (position: Vector, brushRadius: number): void => {
-    /* context.fillStyle = 'black';
-    context.fillRect(position.x - brushRadius, position.y - brushRadius, brushRadius * 2, brushRadius * 2); */
-
-    /* this.context.lineTo(position.x, position.y);
-    this.context.strokeStyle = 'rgba(0, 0, 0, 0.01)';
-    this.context.lineWidth = 50;
-    this.context.stroke(); */
-
-    const color = 'rgba(0, 0, 0, 1)';
-    this.context.fillStyle = color;
-
-    this.context.beginPath();
-    this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
-    this.context.fill();
-  };
-
-  endDrawing = (): void => {
-    this.context.closePath();
+      this.context.beginPath();
+      this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
+      this.context.fill();
+    } else if (brushType === BrushType.eraser) {
+      this.context.clearRect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+    }
   };
 
   public drawImage(object: IDrawableImage): void {
@@ -77,17 +59,25 @@ class CanvasManager {
     this.context.fillRect(position.x, position.y, size.width, size.height);
   }
 
-  public drawBrush(position: Vector, brushRadius: number): void {
+  public drawBrush(position: Vector, brushRadius: number, brushType: BrushType): void {
     this.context.clearRect(0, 0, this.width, this.height);
 
-    const color = 'rgba(0, 0, 0, 1)';
-    this.context.fillStyle = color;
-    this.context.lineWidth = 1;
+    if (brushType === BrushType.brush) {
+      const color = 'rgba(0, 0, 0, 1)';
+      this.context.fillStyle = color;
+      this.context.lineWidth = 1;
 
-    this.context.beginPath();
-    this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
-    this.context.closePath();
-    this.context.stroke();
+      this.context.beginPath();
+      this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
+      this.context.closePath();
+      this.context.stroke();
+    } else if (brushType === BrushType.eraser) {
+      this.context.beginPath();
+      this.context.rect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+      this.context.closePath();
+      this.context.strokeStyle = 'black';
+      this.context.stroke();
+    }
   }
 }
 
