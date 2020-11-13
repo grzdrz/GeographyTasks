@@ -1,15 +1,37 @@
 include ../form-input/form-input
 
-mixin dropdown-form()
+mixin dropdown-form(options = {})
+  -
+    const {
+      list = [
+        'Кавказ (г. Эльбрус)',
+        'Алтай (г.Белуха)',
+        'Уральские горы',
+        'Западные Саяны',
+        'Восточные Саяны',
+        'Сихотэ-Алинь',
+        'Срединный хребет',
+        'Становое нагорье',
+        'горы Бырранга',
+        'Становой хребет',
+        'Верхоянский хребет',
+        'хребет Черского',
+        'Средне-Сибирское плоскогорье',
+        'Восточно-Европейская равнина',
+        'Западно-Сибирская равнина',
+        'Прикаспийская низменность',
+      ],
+    } = options;
+
   div(class=["dropdown-form"])
     button(class=["dropdown-form__drop-button"] type="button")
-      p(class=["dropdown-form__drop-button-text"]) список задач
+      p(class=["dropdown-form__drop-button-text"]) Список мест
       p(class=["dropdown-form__arrow"]) expand_more
     form(class=["dropdown-form__form"])
-      div(class=["dropdown-form__input"])
-        +form-input()
-      div(class=["dropdown-form__input"])
-        +form-input()
-      div(class=["dropdown-form__input"])
-        +form-input()  
+      - for(let i = 0; i < list.length; i += 1)
+        div(class=["dropdown-form__input"])
+          +form-input({
+            index: i + 1,
+            text: list[i],
+          })
       button(class=["dropdown-form__save-button"] type="button") save

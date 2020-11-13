@@ -29,6 +29,7 @@ class DropdownForm {
   }
 
   updateState(): void {
+    this.dropButton.classList.toggle('dropdown-form__drop-button_opened', this.isOpened);
     this.arrow.classList.toggle('dropdown-form__arrow_opened', this.isOpened);
     this.form.classList.toggle('dropdown-form__form_opened', this.isOpened);
   }

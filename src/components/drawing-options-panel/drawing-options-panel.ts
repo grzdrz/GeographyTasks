@@ -34,8 +34,10 @@ class DrawingOptionsPanel {
   setEventsHandlers(): void {
     this.eraser.addEventListener('click', this.handleRadioClick);
     this.brush.addEventListener('click', this.handleRadioClick);
-    this.opacityInput.addEventListener('input', this.handleOpacityChange);
-    this.brushSizeInput.addEventListener('input', this.handleBrushSizeChange);
+    this.opacityInput.addEventListener('input', this.handleOpacityInput);
+    this.brushSizeInput.addEventListener('input', this.handleBrushSizeInput);
+    this.opacityInput.addEventListener('change', this.handleOpacityChange);
+    this.brushSizeInput.addEventListener('change', this.handleBrushSizeChange);
   }
 
   handleRadioClick = (event: Event): void => {
@@ -44,41 +46,65 @@ class DrawingOptionsPanel {
 
     switch (name) {
       case 'brush': {
-        this.task.brushType = BrushType.brush;
+        this.task.toolsManager.brushType = BrushType.brush;
         break;
       }
       case 'eraser': {
-        this.task.brushType = BrushType.eraser;
+        this.task.toolsManager.brushType = BrushType.eraser;
         break;
       }
       default: {
-        this.task.brushType = BrushType.brush;
+        this.task.toolsManager.brushType = BrushType.brush;
         break;
       }
+    }
+  };
+
+  handleOpacityInput = (event: Event): void => {
+    const target = <HTMLInputElement>(event.target);
+    this.task.toolsManager.opacity = Number.parseFloat(target.value);
+    if (this.task.toolsManager.opacity < 0) {
+      target.value = '0';
+      this.task.toolsManager.opacity = 0;
+    } else if (this.task.toolsManager.opacity > 1) {
+      target.value = '1';
+      this.task.toolsManager.opacity = 1;
+    }
+  };
+
+  handleBrushSizeInput = (event: Event): void => {
+    const target = <HTMLInputElement>(event.target);
+    this.task.toolsManager.brushRadius = Number.parseInt(target.value, 10);
+    if (this.task.toolsManager.brushRadius < 1) {
+      target.value = '1';
+      this.task.toolsManager.brushRadius = 1;
+    } else if (this.task.toolsManager.brushRadius > 100) {
+      target.value = '100';
+      this.task.toolsManager.brushRadius = 100;
     }
   };
 
   handleOpacityChange = (event: Event): void => {
     const target = <HTMLInputElement>(event.target);
-    this.task.opacity = Number.parseFloat(target.value);
-    if (this.task.opacity < 0) {
-      target.value = '0';
-      this.task.opacity = 0;
-    } else if (this.task.opacity > 1) {
+    const value = Number.parseFloat(target.value);
+    if (value !== undefined && !Number.isNaN(value)) {
+      this.task.toolsManager.opacity = value;
+      target.value = `${value}`;
+    } else {
+      this.task.toolsManager.opacity = 1;
       target.value = '1';
-      this.task.opacity = 1;
     }
   };
 
   handleBrushSizeChange = (event: Event): void => {
     const target = <HTMLInputElement>(event.target);
-    this.task.brushRadius = Number.parseInt(target.value, 10);
-    if (this.task.brushRadius < 1) {
+    const value = Number.parseFloat(target.value);
+    if (value !== undefined && !Number.isNaN(value)) {
+      this.task.toolsManager.brushRadius = value;
+      target.value = `${value}`;
+    } else {
+      this.task.toolsManager.brushRadius = 1;
       target.value = '1';
-      this.task.brushRadius = 1;
-    } else if (this.task.brushRadius > 100) {
-      target.value = '100';
-      this.task.brushRadius = 100;
     }
   };
 }

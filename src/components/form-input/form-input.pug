@@ -1,7 +1,8 @@
 mixin form-input(options = {})
   -
     const {
-      index = 1111,
+      index = -1,
+      text = 'DEFAULT',
     } = options;
 
   div(class=["form-input"])
@@ -9,5 +10,6 @@ mixin form-input(options = {})
     input(
       class=["form-input__input"]
       type="text"
-      placeholder="placeholder"
+      placeholder="географическое название"
+      value=text
     )
