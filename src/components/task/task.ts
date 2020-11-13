@@ -13,7 +13,7 @@ import './task.scss';
 
 class Task {
   public container: HTMLElement;
-  public canvases: HTMLCanvasElement[];
+  public canvasesContainer: HTMLElement;
 
   public mapCanvasManager: CanvasManager;
   public resultCanvasManager: CanvasManager;
@@ -46,9 +46,11 @@ class Task {
   initialize(): void {
     // eslint-disable-next-line no-mixed-operators
     const biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
-    // const smallestSide = document.documentElement.clientWidth <= document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
-    this.canvasWidth = biggestSide - biggestSide * 0.2;
+    this.canvasWidth = biggestSide - biggestSide * 0.0;
     this.canvasHeight = biggestSide * 0.5;
+
+    this.canvasesContainer = <HTMLElement>(this.container.querySelector('.task__canvases'));
+    this.canvasesContainer.style.height = `${biggestSide * 0.5}px`;
 
     const mapSize = new Vector(this.canvasWidth, this.canvasHeight);
     this.map = new ContourMap(`${compilationOptions.forGithubPages ? '/GeographyTasks' : ''}/src/data/russia.jpg`, mapSize);
@@ -81,6 +83,8 @@ class Task {
 
     this.cursorCanvasManager.canvas.addEventListener('mouseover', this.handleCanvasMouseOver);
 
+    window.addEventListener('resize', this.handleWindowSizeChange);
+
     // eslint-disable-next-line fsd/no-function-declaration-in-event-listener
     this.saveButton.addEventListener('click', () => {
       const can3 = document.createElement('canvas');
@@ -107,7 +111,18 @@ class Task {
     });
   }
 
+  public isDoubleTouch = false;
   handleStartDrawing = (event: UIEvent): void => {
+    if (event instanceof TouchEvent) {
+      if (!this.isDoubleTouch) {
+        this.isDoubleTouch = true;
+        setTimeout(() => {
+          this.isDoubleTouch = false;
+        }, 300);
+        return;
+      }
+    }
+
     this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleDrawing);
     this.cursorCanvasManager.canvas.addEventListener('mouseup', this.handleEndDrawing);
     this.cursorCanvasManager.canvas.addEventListener('touchmove', this.handleDrawing);
@@ -164,8 +179,8 @@ class Task {
     let x;
     let y;
     if (event instanceof TouchEvent) {
-      x = event.changedTouches[0].pageX;
-      y = event.changedTouches[0].pageY;
+      x = event.changedTouches[0].pageX - window.pageXOffset;
+      y = event.changedTouches[0].pageY - window.pageYOffset;
     } else if (event instanceof MouseEvent) {
       x = event.clientX;
       y = event.clientY;
@@ -180,6 +195,35 @@ class Task {
 
     return globalPosition.subtract(containerCoord);
   }
+
+  handleWindowSizeChange = (): void => {
+    let biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
+    if (biggestSide < 1000) biggestSide = 1000;
+    this.canvasWidth = biggestSide - biggestSide * 0.0;
+    this.canvasHeight = biggestSide * 0.5;
+
+    this.canvasesContainer.style.height = `${biggestSide * 0.5}px`;
+
+    this.mapCanvasManager.width = this.canvasWidth;
+    this.mapCanvasManager.height = this.canvasHeight;
+    this.mapCanvasManager.setSize();
+
+    this.resultCanvasManager.width = this.canvasWidth;
+    this.resultCanvasManager.height = this.canvasHeight;
+    this.resultCanvasManager.setSize();
+
+    this.tempCanvasManager.width = this.canvasWidth;
+    this.tempCanvasManager.height = this.canvasHeight;
+    this.tempCanvasManager.setSize();
+
+    this.cursorCanvasManager.width = this.canvasWidth;
+    this.cursorCanvasManager.height = this.canvasHeight;
+    this.cursorCanvasManager.setSize();
+
+    this.map.size.x = this.canvasWidth;
+    this.map.size.y = this.canvasHeight;
+    this.map.draw(this.mapCanvasManager);
+  };
 }
 
 export default Task;

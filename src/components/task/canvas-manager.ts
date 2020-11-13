@@ -20,18 +20,19 @@ class CanvasManager {
     this.height = height;
 
     this.initialaze();
-
-    this.continuousDrawing = this.continuousDrawing.bind(this);
-    // this.continuousDrawing = throttle(this.continuousDrawing, 55);
   }
 
   initialaze(): void {
     /* this.width = document.documentElement.clientWidth;
     this.height = document.documentElement.clientHeight; */
 
+    this.setSize();
+  }
+
+  setSize = (): void => {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
-  }
+  };
 
   erase = (position: Vector, brushRadius: number): void => {
     this.context.clearRect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
@@ -55,7 +56,7 @@ class CanvasManager {
     }
   };
 
-  continuousDrawing(position: Vector, brushRadius: number): void {
+  continuousDrawing = (position: Vector, brushRadius: number): void => {
     if (brushRadius < 20) {
       const color = 'rgba(0, 0, 0, 1)';
       this.context.strokeStyle = color;
@@ -70,7 +71,7 @@ class CanvasManager {
       this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
       this.context.fill();
     }
-  }
+  };
 
   public drawImage(object: IDrawableImage): void {
     if (object.isImageLoaded) {

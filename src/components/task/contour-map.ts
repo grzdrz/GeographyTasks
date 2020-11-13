@@ -26,12 +26,16 @@ class ContourMap {
   } */
 
   public draw(canvas: CanvasManager): void {
-    const timerId = setInterval(() => {
-      if (this.isImageLoaded) {
-        clearInterval(timerId);
-      }
+    if (!this.isImageLoaded) {
+      const timerId = setInterval(() => {
+        if (this.isImageLoaded) {
+          clearInterval(timerId);
+        }
+        canvas.drawImage(this);
+      }, 500);
+    } else {
       canvas.drawImage(this);
-    }, 500);
+    }
   }
 }
 

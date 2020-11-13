@@ -2,8 +2,9 @@ include ../form-input/form-input
 
 mixin dropdown-form()
   div(class=["dropdown-form"])
-    button(class=["dropdown-form__drop-button"] type="button") 
-      div(class=["dropdown-form__arrow"]) expand_more
+    button(class=["dropdown-form__drop-button"] type="button")
+      p(class=["dropdown-form__drop-button-text"]) список задач
+      p(class=["dropdown-form__arrow"]) expand_more
     form(class=["dropdown-form__form"])
       div(class=["dropdown-form__input"])
         +form-input()
