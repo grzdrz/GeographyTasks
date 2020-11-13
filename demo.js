@@ -992,7 +992,7 @@ exports.default = Vector;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const compilationOptions = {
-    forGithubPages: false,
+    forGithubPages: true,
 };
 exports.default = compilationOptions;
 
@@ -1724,4 +1724,4 @@ const task = new task_1.default(container);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map?v=faedd78a2093bb8947cc
+//# sourceMappingURL=demo.js.map?v=1fbb9f6d343a007bbfe8
