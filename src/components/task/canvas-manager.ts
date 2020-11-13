@@ -1,6 +1,10 @@
+/* eslint-disable prefer-rest-params */
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { makeDebounce, throttle } from '../../assets/helpers';
 import Vector from '../../assets/Vector';
-import BrushType from './BrushType';
-import IDrawableImage from './IDrawableImage';
+import BrushType from './brush-type';
+import IDrawableImage from './i-drawable-image';
 
 class CanvasManager {
   public canvas: HTMLCanvasElement;
@@ -8,33 +12,65 @@ class CanvasManager {
   public width: number;
   public height: number;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, width: number, height: number) {
     this.canvas = canvas;
     this.context = canvas.getContext('2d');
 
+    this.width = width;
+    this.height = height;
+
     this.initialaze();
+
+    this.continuousDrawing = this.continuousDrawing.bind(this);
+    // this.continuousDrawing = throttle(this.continuousDrawing, 55);
   }
 
   initialaze(): void {
-    this.width = document.documentElement.clientWidth;
-    this.height = document.documentElement.clientHeight;
+    /* this.width = document.documentElement.clientWidth;
+    this.height = document.documentElement.clientHeight; */
 
     this.canvas.width = this.width;
     this.canvas.height = this.height;
   }
 
-  draw = (position: Vector, brushRadius: number, brushType: BrushType): void => {
-    if (brushType === BrushType.brush) {
+  erase = (position: Vector, brushRadius: number): void => {
+    this.context.clearRect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+  };
+
+  beginDrawing = (position: Vector, brushRadius: number): void => {
+    if (brushRadius < 20) {
+      this.context.beginPath();
+      const color = 'rgba(0, 0, 0, 1)';
+      this.context.strokeStyle = color;
+      this.context.lineWidth = brushRadius * 2;
+      this.context.lineCap = 'round';
+      this.context.lineTo(position.x, position.y);
+      this.context.stroke();
+    } else {
       const color = 'rgba(0, 0, 0, 1)';
       this.context.fillStyle = color;
-
       this.context.beginPath();
       this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
       this.context.fill();
-    } else if (brushType === BrushType.eraser) {
-      this.context.clearRect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
     }
   };
+
+  continuousDrawing(position: Vector, brushRadius: number): void {
+    if (brushRadius < 20) {
+      const color = 'rgba(0, 0, 0, 1)';
+      this.context.strokeStyle = color;
+      this.context.lineWidth = brushRadius * 2;
+      this.context.lineCap = 'round';
+      this.context.lineTo(position.x, position.y);
+      this.context.stroke();
+    } else {
+      const color = 'rgba(0, 0, 0, 1)';
+      this.context.fillStyle = color;
+      this.context.beginPath();
+      this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
+      this.context.fill();
+    }
+  }
 
   public drawImage(object: IDrawableImage): void {
     if (object.isImageLoaded) {

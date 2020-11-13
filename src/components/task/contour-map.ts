@@ -1,5 +1,5 @@
 import Vector from '../../assets/vector';
-import CanvasManager from './CanvasManager';
+import CanvasManager from './canvas-manager';
 
 class ContourMap {
   public position = new Vector(0, 0);
@@ -19,14 +19,13 @@ class ContourMap {
     };
   }
 
-  public initialize(): void {
+  /* public initialize(): void {
   }
 
   public update(isSelected: boolean, gameTime: DOMHighResTimeStamp): void {
-  }
+  } */
 
   public draw(canvas: CanvasManager): void {
-    /* while (!this.isImageLoaded)  */
     const timerId = setInterval(() => {
       if (this.isImageLoaded) {
         clearInterval(timerId);

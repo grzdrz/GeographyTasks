@@ -1,4 +1,4 @@
-import BrushType from '../task/BrushType';
+import BrushType from '../task/brush-type';
 import Task from '../task/task';
 import './drawing-options-panel.scss';
 
@@ -34,8 +34,6 @@ class DrawingOptionsPanel {
   setEventsHandlers(): void {
     this.eraser.addEventListener('click', this.handleRadioClick);
     this.brush.addEventListener('click', this.handleRadioClick);
-    /* this.opacityInput.addEventListener('change', this.handleOpacityChange);
-    this.brushSizeInput.addEventListener('change', this.handleBrushSizeChange); */
     this.opacityInput.addEventListener('input', this.handleOpacityChange);
     this.brushSizeInput.addEventListener('input', this.handleBrushSizeChange);
   }
