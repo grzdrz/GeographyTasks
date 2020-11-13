@@ -1447,7 +1447,10 @@ class Task {
                     }, 300);
                     return;
                 }
+                event.preventDefault();
             }
+            if (event instanceof MouseEvent && this.isDoubleTouch)
+                return;
             this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleDrawing);
             this.cursorCanvasManager.canvas.addEventListener('mouseup', this.handleEndDrawing);
             this.cursorCanvasManager.canvas.addEventListener('touchmove', this.handleDrawing);
@@ -1478,6 +1481,8 @@ class Task {
             this.tempCanvasManager.context.clearRect(0, 0, this.resultCanvasManager.width, this.resultCanvasManager.height);
         };
         this.handleCanvasMouseOver = (event) => {
+            if (event instanceof MouseEvent && this.isDoubleTouch)
+                return;
             this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleCanvasMouseMove);
             this.cursorCanvasManager.canvas.addEventListener('mouseout', this.handleCanvasMouseOut);
             const globalPosition = this.calculateMousePosition(event);
@@ -1724,4 +1729,4 @@ const task = new task_1.default(container);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map?v=1fbb9f6d343a007bbfe8
+//# sourceMappingURL=demo.js.map?v=030e3d6b4c166aaefd8f
