@@ -992,7 +992,7 @@ exports.default = Vector;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const compilationOptions = {
-    forGithubPages: false,
+    forGithubPages: true,
 };
 exports.default = compilationOptions;
 
@@ -1499,43 +1499,6 @@ class Task {
             this.cursorCanvasManager.canvas.removeEventListener('mouseout', this.handleCanvasMouseOut);
             this.cursorCanvasManager.context.clearRect(0, 0, this.cursorCanvasManager.width, this.cursorCanvasManager.height);
         };
-        this.handleWindowSizeChange = () => {
-            /* let biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
-            if (biggestSide < 1000) biggestSide = 1000;
-            this.canvasWidth = biggestSide - biggestSide * 0.0;
-            this.canvasHeight = biggestSide * 0.5;
-        
-            this.canvasesContainer.style.height = `${biggestSide * 0.5}px`;
-        
-            this.mapCanvasManager.width = this.canvasWidth;
-            this.mapCanvasManager.height = this.canvasHeight;
-            this.mapCanvasManager.setSize();
-        
-            const tempCanvas = document.createElement('canvas');
-            const tempContext = tempCanvas.getContext('2d');
-            tempCanvas.width = this.canvasWidth;
-            tempCanvas.height = this.canvasHeight;
-            tempContext.drawImage(this.resultCanvasManager.canvas, this.canvasWidth, this.canvasHeight);
-            this.resultCanvasManager.width = this.canvasWidth;
-            this.resultCanvasManager.height = this.canvasHeight;
-            this.resultCanvasManager.setSize();
-            
-        
-            this.tempCanvasManager.width = this.canvasWidth;
-            this.tempCanvasManager.height = this.canvasHeight;
-            this.tempCanvasManager.setSize();
-        
-            this.cursorCanvasManager.width = this.canvasWidth;
-            this.cursorCanvasManager.height = this.canvasHeight;
-            this.cursorCanvasManager.setSize();
-        
-            this.map.size.x = this.canvasWidth;
-            this.map.size.y = this.canvasHeight;
-            this.map.draw(this.mapCanvasManager);
-            
-            
-            this.resultCanvasManager.context.drawImage(tempCanvas, this.canvasWidth, this.canvasHeight); */
-        };
         this.container = container;
         this.initialize();
         this.setEventsHandlers();
@@ -1572,7 +1535,6 @@ class Task {
         this.cursorCanvasManager.canvas.addEventListener('mousedown', this.handleStartDrawing);
         this.cursorCanvasManager.canvas.addEventListener('touchstart', this.handleStartDrawing);
         this.cursorCanvasManager.canvas.addEventListener('mouseover', this.handleCanvasMouseOver);
-        window.addEventListener('resize', this.handleWindowSizeChange);
         // eslint-disable-next-line fsd/no-function-declaration-in-event-listener
         this.saveButton.addEventListener('click', () => {
             const can3 = document.createElement('canvas');
@@ -1745,4 +1707,4 @@ const task = new task_1.default(container);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map?v=0b8c7f59d155e88e4ff3
+//# sourceMappingURL=demo.js.map?v=5de7cf7081e29d32efb1
