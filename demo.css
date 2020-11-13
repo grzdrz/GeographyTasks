@@ -228,7 +228,8 @@
   .task__canvases {
     width: 100%;
     display: flex;
-    position: relative; }
+    position: relative;
+    overflow: scroll; }
   .task__map-canvas, .task__result-canvas, .task__temp-canvas, .task__cursor-canvas {
     position: absolute; }
 
