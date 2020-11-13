@@ -37,6 +37,7 @@
     width: 100%;
     display: flex;
     position: relative;
+    overflow: scroll;
   }
 
   &__map-canvas,

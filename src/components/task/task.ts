@@ -45,7 +45,8 @@ class Task {
 
   initialize(): void {
     // eslint-disable-next-line no-mixed-operators
-    const biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
+    let biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
+    if (biggestSide < 1000) biggestSide = 1000;
     this.canvasWidth = biggestSide - biggestSide * 0.0;
     this.canvasHeight = biggestSide * 0.5;
 
@@ -83,8 +84,6 @@ class Task {
 
     this.cursorCanvasManager.canvas.addEventListener('mouseover', this.handleCanvasMouseOver);
 
-    window.addEventListener('resize', this.handleWindowSizeChange);
-
     // eslint-disable-next-line fsd/no-function-declaration-in-event-listener
     this.saveButton.addEventListener('click', () => {
       const can3 = document.createElement('canvas');
@@ -121,7 +120,10 @@ class Task {
         }, 300);
         return;
       }
+
+      event.preventDefault();
     }
+    if (event instanceof MouseEvent && this.isDoubleTouch) return;
 
     this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleDrawing);
     this.cursorCanvasManager.canvas.addEventListener('mouseup', this.handleEndDrawing);
@@ -154,6 +156,8 @@ class Task {
   };
 
   handleCanvasMouseOver = (event: UIEvent): void => {
+    if (event instanceof MouseEvent && this.isDoubleTouch) return;
+
     this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleCanvasMouseMove);
     this.cursorCanvasManager.canvas.addEventListener('mouseout', this.handleCanvasMouseOut);
 
@@ -195,35 +199,6 @@ class Task {
 
     return globalPosition.subtract(containerCoord);
   }
-
-  handleWindowSizeChange = (): void => {
-    let biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
-    if (biggestSide < 1000) biggestSide = 1000;
-    this.canvasWidth = biggestSide - biggestSide * 0.0;
-    this.canvasHeight = biggestSide * 0.5;
-
-    this.canvasesContainer.style.height = `${biggestSide * 0.5}px`;
-
-    this.mapCanvasManager.width = this.canvasWidth;
-    this.mapCanvasManager.height = this.canvasHeight;
-    this.mapCanvasManager.setSize();
-
-    this.resultCanvasManager.width = this.canvasWidth;
-    this.resultCanvasManager.height = this.canvasHeight;
-    this.resultCanvasManager.setSize();
-
-    this.tempCanvasManager.width = this.canvasWidth;
-    this.tempCanvasManager.height = this.canvasHeight;
-    this.tempCanvasManager.setSize();
-
-    this.cursorCanvasManager.width = this.canvasWidth;
-    this.cursorCanvasManager.height = this.canvasHeight;
-    this.cursorCanvasManager.setSize();
-
-    this.map.size.x = this.canvasWidth;
-    this.map.size.y = this.canvasHeight;
-    this.map.draw(this.mapCanvasManager);
-  };
 }
 
 export default Task;
