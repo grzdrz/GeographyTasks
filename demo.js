@@ -992,7 +992,7 @@ exports.default = Vector;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const compilationOptions = {
-    forGithubPages: true,
+    forGithubPages: false,
 };
 exports.default = compilationOptions;
 
@@ -1041,7 +1041,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const BrushType_1 = __importDefault(__webpack_require__(/*! ../task/BrushType */ "./src/components/task/BrushType.ts"));
+const brush_type_1 = __importDefault(__webpack_require__(/*! ../task/brush-type */ "./src/components/task/brush-type.ts"));
 __webpack_require__(/*! ./drawing-options-panel.scss */ "./src/components/drawing-options-panel/drawing-options-panel.scss");
 class DrawingOptionsPanel {
     constructor(container, task) {
@@ -1050,15 +1050,15 @@ class DrawingOptionsPanel {
             const { name } = target.dataset;
             switch (name) {
                 case 'brush': {
-                    this.task.brushType = BrushType_1.default.brush;
+                    this.task.brushType = brush_type_1.default.brush;
                     break;
                 }
                 case 'eraser': {
-                    this.task.brushType = BrushType_1.default.eraser;
+                    this.task.brushType = brush_type_1.default.eraser;
                     break;
                 }
                 default: {
-                    this.task.brushType = BrushType_1.default.brush;
+                    this.task.brushType = brush_type_1.default.brush;
                     break;
                 }
             }
@@ -1104,8 +1104,6 @@ class DrawingOptionsPanel {
     setEventsHandlers() {
         this.eraser.addEventListener('click', this.handleRadioClick);
         this.brush.addEventListener('click', this.handleRadioClick);
-        /* this.opacityInput.addEventListener('change', this.handleOpacityChange);
-        this.brushSizeInput.addEventListener('change', this.handleBrushSizeChange); */
         this.opacityInput.addEventListener('input', this.handleOpacityChange);
         this.brushSizeInput.addEventListener('input', this.handleBrushSizeChange);
     }
@@ -1194,10 +1192,10 @@ exports.default = DropdownForm;
 
 /***/ }),
 
-/***/ "./src/components/task/BrushType.ts":
-/*!******************************************!*\
-  !*** ./src/components/task/BrushType.ts ***!
-  \******************************************/
+/***/ "./src/components/task/brush-type.ts":
+/*!*******************************************!*\
+  !*** ./src/components/task/brush-type.ts ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1214,10 +1212,10 @@ exports.default = BrushType;
 
 /***/ }),
 
-/***/ "./src/components/task/CanvasManager.ts":
-/*!**********************************************!*\
-  !*** ./src/components/task/CanvasManager.ts ***!
-  \**********************************************/
+/***/ "./src/components/task/canvas-manager.ts":
+/*!***********************************************!*\
+  !*** ./src/components/task/canvas-manager.ts ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1228,30 +1226,61 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Vector_1 = __importDefault(__webpack_require__(/*! ../../assets/Vector */ "./src/assets/Vector.ts"));
-const BrushType_1 = __importDefault(__webpack_require__(/*! ./BrushType */ "./src/components/task/BrushType.ts"));
+const brush_type_1 = __importDefault(__webpack_require__(/*! ./brush-type */ "./src/components/task/brush-type.ts"));
 class CanvasManager {
-    constructor(canvas) {
-        this.draw = (position, brushRadius, brushType) => {
-            if (brushType === BrushType_1.default.brush) {
+    constructor(canvas, width, height) {
+        this.setSize = () => {
+            this.canvas.width = this.width;
+            this.canvas.height = this.height;
+        };
+        this.erase = (position, brushRadius) => {
+            this.context.clearRect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+        };
+        this.beginDrawing = (position, brushRadius) => {
+            if (brushRadius < 20) {
+                this.context.beginPath();
+                const color = 'rgba(0, 0, 0, 1)';
+                this.context.strokeStyle = color;
+                this.context.lineWidth = brushRadius * 2;
+                this.context.lineCap = 'round';
+                this.context.lineTo(position.x, position.y);
+                this.context.stroke();
+            }
+            else {
                 const color = 'rgba(0, 0, 0, 1)';
                 this.context.fillStyle = color;
                 this.context.beginPath();
                 this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
                 this.context.fill();
             }
-            else if (brushType === BrushType_1.default.eraser) {
-                this.context.clearRect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+        };
+        this.continuousDrawing = (position, brushRadius) => {
+            if (brushRadius < 20) {
+                const color = 'rgba(0, 0, 0, 1)';
+                this.context.strokeStyle = color;
+                this.context.lineWidth = brushRadius * 2;
+                this.context.lineCap = 'round';
+                this.context.lineTo(position.x, position.y);
+                this.context.stroke();
+            }
+            else {
+                const color = 'rgba(0, 0, 0, 1)';
+                this.context.fillStyle = color;
+                this.context.beginPath();
+                this.context.arc(position.x, position.y, brushRadius, 0, Math.PI * 2);
+                this.context.fill();
             }
         };
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
+        this.width = width;
+        this.height = height;
         this.initialaze();
     }
     initialaze() {
-        this.width = document.documentElement.clientWidth;
-        this.height = document.documentElement.clientHeight;
-        this.canvas.width = this.width;
-        this.canvas.height = this.height;
+        /* this.width = document.documentElement.clientWidth;
+        this.height = document.documentElement.clientHeight; */
+        this.setSize();
     }
     drawImage(object) {
         if (object.isImageLoaded) {
@@ -1277,7 +1306,7 @@ class CanvasManager {
     }
     drawBrush(position, brushRadius, brushType) {
         this.context.clearRect(0, 0, this.width, this.height);
-        if (brushType === BrushType_1.default.brush) {
+        if (brushType === brush_type_1.default.brush) {
             const color = 'rgba(0, 0, 0, 1)';
             this.context.fillStyle = color;
             this.context.lineWidth = 1;
@@ -1286,7 +1315,7 @@ class CanvasManager {
             this.context.closePath();
             this.context.stroke();
         }
-        else if (brushType === BrushType_1.default.eraser) {
+        else if (brushType === brush_type_1.default.eraser) {
             this.context.beginPath();
             this.context.rect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
             this.context.closePath();
@@ -1300,10 +1329,10 @@ exports.default = CanvasManager;
 
 /***/ }),
 
-/***/ "./src/components/task/ContourMap.ts":
-/*!*******************************************!*\
-  !*** ./src/components/task/ContourMap.ts ***!
-  \*******************************************/
+/***/ "./src/components/task/contour-map.ts":
+/*!********************************************!*\
+  !*** ./src/components/task/contour-map.ts ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1327,18 +1356,23 @@ class ContourMap {
             this.isImageLoaded = true;
         };
     }
-    initialize() {
+    /* public initialize(): void {
     }
-    update(isSelected, gameTime) {
-    }
+  
+    public update(isSelected: boolean, gameTime: DOMHighResTimeStamp): void {
+    } */
     draw(canvas) {
-        /* while (!this.isImageLoaded)  */
-        const timerId = setInterval(() => {
-            if (this.isImageLoaded) {
-                clearInterval(timerId);
-            }
+        if (!this.isImageLoaded) {
+            const timerId = setInterval(() => {
+                if (this.isImageLoaded) {
+                    clearInterval(timerId);
+                }
+                canvas.drawImage(this);
+            }, 500);
+        }
+        else {
             canvas.drawImage(this);
-        }, 500);
+        }
     }
 }
 exports.default = ContourMap;
@@ -1391,36 +1425,48 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 const file_saver_1 = __webpack_require__(/*! file-saver */ "./node_modules/file-saver/dist/FileSaver.min.js");
 const Vector_1 = __importDefault(__webpack_require__(/*! ../../assets/Vector */ "./src/assets/Vector.ts"));
-const CanvasManager_1 = __importDefault(__webpack_require__(/*! ./CanvasManager */ "./src/components/task/CanvasManager.ts"));
-const ContourMap_1 = __importDefault(__webpack_require__(/*! ./ContourMap */ "./src/components/task/ContourMap.ts"));
+const compilationOptions_1 = __importDefault(__webpack_require__(/*! ../../compilationOptions */ "./src/compilationOptions.ts"));
 const dropdown_form_1 = __importDefault(__webpack_require__(/*! ../dropdown-form/dropdown-form */ "./src/components/dropdown-form/dropdown-form.ts"));
 const drawing_options_panel_1 = __importDefault(__webpack_require__(/*! ../drawing-options-panel/drawing-options-panel */ "./src/components/drawing-options-panel/drawing-options-panel.ts"));
+const brush_type_1 = __importDefault(__webpack_require__(/*! ./brush-type */ "./src/components/task/brush-type.ts"));
+const canvas_manager_1 = __importDefault(__webpack_require__(/*! ./canvas-manager */ "./src/components/task/canvas-manager.ts"));
+const contour_map_1 = __importDefault(__webpack_require__(/*! ./contour-map */ "./src/components/task/contour-map.ts"));
 __webpack_require__(/*! ./task.scss */ "./src/components/task/task.scss");
-const BrushType_1 = __importDefault(__webpack_require__(/*! ./BrushType */ "./src/components/task/BrushType.ts"));
-const compilationOptions_1 = __importDefault(__webpack_require__(/*! ../../compilationOptions */ "./src/compilationOptions.ts"));
 class Task {
     constructor(container) {
         this.brushRadius = 50;
         this.opacity = 0.5;
-        this.brushType = BrushType_1.default.brush;
+        this.brushType = brush_type_1.default.brush;
+        this.isDoubleTouch = false;
         this.handleStartDrawing = (event) => {
+            if (event instanceof TouchEvent) {
+                if (!this.isDoubleTouch) {
+                    this.isDoubleTouch = true;
+                    setTimeout(() => {
+                        this.isDoubleTouch = false;
+                    }, 300);
+                    return;
+                }
+            }
             this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleDrawing);
             this.cursorCanvasManager.canvas.addEventListener('mouseup', this.handleEndDrawing);
             this.cursorCanvasManager.canvas.addEventListener('touchmove', this.handleDrawing);
             this.cursorCanvasManager.canvas.addEventListener('touchend', this.handleEndDrawing);
-            const position = this.calculateMousePosition(event);
+            const globalPosition = this.calculateMousePosition(event);
+            const positionInsideCanvases = this.calculateMousePositionInsideCanvases(globalPosition);
             this.tempCanvasManager.canvas.style.opacity = `${this.opacity}`;
-            if (this.brushType === BrushType_1.default.brush)
-                this.tempCanvasManager.draw(position, this.brushRadius, this.brushType);
-            else if (this.brushType === BrushType_1.default.eraser)
-                this.resultCanvasManager.draw(position, this.brushRadius, this.brushType);
+            if (this.brushType === brush_type_1.default.brush)
+                this.tempCanvasManager.beginDrawing(positionInsideCanvases, this.brushRadius) /* this.tempCanvasManager.draw(positionInsideCanvases, this.brushRadius, this.brushType) */;
+            else if (this.brushType === brush_type_1.default.eraser)
+                this.resultCanvasManager.erase(positionInsideCanvases, this.brushRadius);
         };
         this.handleDrawing = (event) => {
-            const position = this.calculateMousePosition(event);
-            if (this.brushType === BrushType_1.default.brush)
-                this.tempCanvasManager.draw(position, this.brushRadius, this.brushType);
-            else if (this.brushType === BrushType_1.default.eraser)
-                this.resultCanvasManager.draw(position, this.brushRadius, this.brushType);
+            const globalPosition = this.calculateMousePosition(event);
+            const positionInsideCanvases = this.calculateMousePositionInsideCanvases(globalPosition);
+            if (this.brushType === brush_type_1.default.brush)
+                this.tempCanvasManager.continuousDrawing(positionInsideCanvases, this.brushRadius) /* this.tempCanvasManager.draw(positionInsideCanvases, this.brushRadius, this.brushType) */;
+            else if (this.brushType === brush_type_1.default.eraser)
+                this.resultCanvasManager.erase(positionInsideCanvases, this.brushRadius);
         };
         this.handleEndDrawing = () => {
             this.cursorCanvasManager.canvas.removeEventListener('mousemove', this.handleDrawing);
@@ -1434,39 +1480,66 @@ class Task {
         this.handleCanvasMouseOver = (event) => {
             this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleCanvasMouseMove);
             this.cursorCanvasManager.canvas.addEventListener('mouseout', this.handleCanvasMouseOut);
-            const position = this.calculateMousePosition(event);
-            this.cursorCanvasManager.drawBrush(position, this.brushRadius, this.brushType);
+            const globalPosition = this.calculateMousePosition(event);
+            const positionInsideCanvases = this.calculateMousePositionInsideCanvases(globalPosition);
+            this.cursorCanvasManager.drawBrush(positionInsideCanvases, this.brushRadius, this.brushType);
         };
         this.handleCanvasMouseMove = (event) => {
-            const position = this.calculateMousePosition(event);
-            this.cursorCanvasManager.drawBrush(position, this.brushRadius, this.brushType);
+            const globalPosition = this.calculateMousePosition(event);
+            const positionInsideCanvases = this.calculateMousePositionInsideCanvases(globalPosition);
+            this.cursorCanvasManager.drawBrush(positionInsideCanvases, this.brushRadius, this.brushType);
         };
-        this.handleCanvasMouseOut = (event) => {
+        this.handleCanvasMouseOut = () => {
             this.cursorCanvasManager.canvas.removeEventListener('mousemove', this.handleCanvasMouseMove);
             this.cursorCanvasManager.canvas.removeEventListener('mouseout', this.handleCanvasMouseOut);
             this.cursorCanvasManager.context.clearRect(0, 0, this.cursorCanvasManager.width, this.cursorCanvasManager.height);
         };
+        this.handleWindowSizeChange = () => {
+            let biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
+            if (biggestSide < 1000)
+                biggestSide = 1000;
+            this.canvasWidth = biggestSide - biggestSide * 0.0;
+            this.canvasHeight = biggestSide * 0.5;
+            this.canvasesContainer.style.height = `${biggestSide * 0.5}px`;
+            this.mapCanvasManager.width = this.canvasWidth;
+            this.mapCanvasManager.height = this.canvasHeight;
+            this.mapCanvasManager.setSize();
+            this.resultCanvasManager.width = this.canvasWidth;
+            this.resultCanvasManager.height = this.canvasHeight;
+            this.resultCanvasManager.setSize();
+            this.tempCanvasManager.width = this.canvasWidth;
+            this.tempCanvasManager.height = this.canvasHeight;
+            this.tempCanvasManager.setSize();
+            this.cursorCanvasManager.width = this.canvasWidth;
+            this.cursorCanvasManager.height = this.canvasHeight;
+            this.cursorCanvasManager.setSize();
+            this.map.size.x = this.canvasWidth;
+            this.map.size.y = this.canvasHeight;
+            this.map.draw(this.mapCanvasManager);
+        };
         this.container = container;
         this.initialize();
         this.setEventsHandlers();
-        /* this.setSize(); */
         this.map.draw(this.mapCanvasManager);
     }
     initialize() {
-        /* this.canvases = [...this.container.querySelectorAll('.task__canvas')].map((canvas) => canvas as HTMLCanvasElement); */
+        // eslint-disable-next-line no-mixed-operators
+        const biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
+        this.canvasWidth = biggestSide - biggestSide * 0.0;
+        this.canvasHeight = biggestSide * 0.5;
+        this.canvasesContainer = (this.container.querySelector('.task__canvases'));
+        this.canvasesContainer.style.height = `${biggestSide * 0.5}px`;
+        const mapSize = new Vector_1.default(this.canvasWidth, this.canvasHeight);
+        this.map = new contour_map_1.default(`${compilationOptions_1.default.forGithubPages ? '/GeographyTasks' : ''}/src/data/russia.jpg`, mapSize);
         const mapCanvas = (this.container.querySelector('.task__map-canvas'));
-        this.mapCanvasManager = new CanvasManager_1.default(mapCanvas);
+        this.mapCanvasManager = new canvas_manager_1.default(mapCanvas, this.canvasWidth, this.canvasHeight);
         const resultCanvas = (this.container.querySelector('.task__result-canvas'));
-        this.resultCanvasManager = new CanvasManager_1.default(resultCanvas);
-        /* this.resultCanvasManager.canvas.style.opacity = '0.5'; */
-        /* this.resultCanvasManager.context.globalAlpha = 0.5; */
+        this.resultCanvasManager = new canvas_manager_1.default(resultCanvas, this.canvasWidth, this.canvasHeight);
         const tempCanvas = (this.container.querySelector('.task__temp-canvas'));
-        this.tempCanvasManager = new CanvasManager_1.default(tempCanvas);
+        this.tempCanvasManager = new canvas_manager_1.default(tempCanvas, this.canvasWidth, this.canvasHeight);
         this.tempCanvasManager.canvas.style.opacity = `${this.opacity}`;
         const cursorCanvas = (this.container.querySelector('.task__cursor-canvas'));
-        this.cursorCanvasManager = new CanvasManager_1.default(cursorCanvas);
-        const mapSize = new Vector_1.default(this.mapCanvasManager.width, this.mapCanvasManager.height);
-        this.map = new ContourMap_1.default(`${compilationOptions_1.default.forGithubPages ? '/GeographyTasks' : ''}/src/data/russia.jpg`, mapSize);
+        this.cursorCanvasManager = new canvas_manager_1.default(cursorCanvas, this.canvasWidth, this.canvasHeight);
         const dropdownFormContainer = (this.container.querySelector('.task__dropdown-form'));
         this.dropdownForm = new dropdown_form_1.default(dropdownFormContainer);
         this.saveButton = this.container.querySelector('.dropdown-form__save-button');
@@ -1478,6 +1551,7 @@ class Task {
         this.cursorCanvasManager.canvas.addEventListener('mousedown', this.handleStartDrawing);
         this.cursorCanvasManager.canvas.addEventListener('touchstart', this.handleStartDrawing);
         this.cursorCanvasManager.canvas.addEventListener('mouseover', this.handleCanvasMouseOver);
+        window.addEventListener('resize', this.handleWindowSizeChange);
         // eslint-disable-next-line fsd/no-function-declaration-in-event-listener
         this.saveButton.addEventListener('click', () => {
             const can3 = document.createElement('canvas');
@@ -1504,14 +1578,19 @@ class Task {
         let x;
         let y;
         if (event instanceof TouchEvent) {
-            x = event.changedTouches[0].pageX;
-            y = event.changedTouches[0].pageY;
+            x = event.changedTouches[0].pageX - window.pageXOffset;
+            y = event.changedTouches[0].pageY - window.pageYOffset;
         }
         else if (event instanceof MouseEvent) {
             x = event.clientX;
             y = event.clientY;
         }
         return new Vector_1.default(x, y);
+    }
+    calculateMousePositionInsideCanvases(globalPosition) {
+        const containerBoundingRect = this.mapCanvasManager.canvas.getBoundingClientRect();
+        const containerCoord = new Vector_1.default(containerBoundingRect.x, containerBoundingRect.y);
+        return globalPosition.subtract(containerCoord);
     }
 }
 exports.default = Task;
@@ -1645,4 +1724,4 @@ const task = new task_1.default(container);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map?v=8f2779eec8e951e3ccc6
+//# sourceMappingURL=demo.js.map?v=faedd78a2093bb8947cc
