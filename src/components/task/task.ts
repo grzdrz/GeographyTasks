@@ -95,7 +95,10 @@ class Task {
     this.drawingOptionsPanel = new DrawingOptionsPanel(drawingOptionsPanelContainer, this);
 
     this.trySetDrawingFromLocalStorage();
+
+    this.testField = document.querySelector('.TEST');
   }
+  public testField: HTMLElement;
 
   initializeCanvases(): void {
 
@@ -148,8 +151,12 @@ class Task {
   }
 
   public isDoubleTouch = false;
+  public touchIdentifier = -1;
   handleStartDrawing = (event: UIEvent): void => {
     if (event instanceof TouchEvent) {
+      // console.log(`length: ${event.changedTouches.length}, id: ${[...event.changedTouches].reduce((sum, touch) => `${touch.identifier}, `, '')}`);
+      this.testField.textContent = `length: ${event.changedTouches.length}, id: ${[...event.changedTouches].reduce((sum, touch) => `${touch.identifier}, `, '')}`;
+      if (event.changedTouches[0].identifier > 0) return;
       if (!this.isDoubleTouch) {
         this.isDoubleTouch = true;
         setTimeout(() => {

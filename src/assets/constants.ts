@@ -1,5 +1,5 @@
 const constants = {
-  OPACITY: 1,
+  OPACITY: 0.9,
   BRUSH_RADIUS: 3,
 };
 
