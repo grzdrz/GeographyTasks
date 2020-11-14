@@ -818,7 +818,7 @@ exports.default = Vector;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const constants = {
-    OPACITY: 1,
+    OPACITY: 0.8,
     BRUSH_RADIUS: 3,
 };
 exports.default = constants;
@@ -1759,6 +1759,8 @@ class Task {
         this.isDoubleTouch = false;
         this.handleStartDrawing = (event) => {
             if (event instanceof TouchEvent) {
+                if (event.changedTouches.length > 1)
+                    return;
                 if (!this.isDoubleTouch) {
                     this.isDoubleTouch = true;
                     setTimeout(() => {
@@ -2199,4 +2201,4 @@ const task = new task_1.default(container);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map?v=b420cf18daa38e61361a
+//# sourceMappingURL=demo.js.map?v=db077e7ce358331fd3ec
