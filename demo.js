@@ -136,6 +136,17 @@
 
 /***/ }),
 
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/save-button/save-button.scss":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/save-button/save-button.scss ***!
+  \****************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/task/task.scss":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/task/task.scss ***!
@@ -796,6 +807,25 @@ exports.default = Vector;
 
 /***/ }),
 
+/***/ "./src/assets/constants.ts":
+/*!*********************************!*\
+  !*** ./src/assets/constants.ts ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const constants = {
+    OPACITY: 1,
+    BRUSH_RADIUS: 3,
+};
+exports.default = constants;
+
+
+/***/ }),
+
 /***/ "./src/assets/fonts.scss":
 /*!*******************************!*\
   !*** ./src/assets/fonts.scss ***!
@@ -1224,6 +1254,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const constants_1 = __importDefault(__webpack_require__(/*! ../../assets/constants */ "./src/assets/constants.ts"));
 const brush_type_1 = __importDefault(__webpack_require__(/*! ../task/brush-type */ "./src/components/task/brush-type.ts"));
 __webpack_require__(/*! ./drawing-options-panel.scss */ "./src/components/drawing-options-panel/drawing-options-panel.scss");
 class DrawingOptionsPanel {
@@ -1299,8 +1330,8 @@ class DrawingOptionsPanel {
         this.initialize();
         this.setEventsHandlers();
         this.brush.checked = true;
-        this.opacityInput.value = '0.5';
-        this.brushSizeInput.value = '50';
+        this.opacityInput.value = `${constants_1.default.OPACITY}`;
+        this.brushSizeInput.value = `${constants_1.default.BRUSH_RADIUS}`;
     }
     initialize() {
         this.eraser = this.container.querySelector('.drawing-options-panel__eraser');
@@ -1402,6 +1433,74 @@ exports.default = DropdownForm;
 
 /***/ }),
 
+/***/ "./src/components/save-button/save-button.scss":
+/*!*****************************************************!*\
+  !*** ./src/components/save-button/save-button.scss ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./save-button.scss */ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/save-button/save-button.scss");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./src/components/save-button/save-button.ts":
+/*!***************************************************!*\
+  !*** ./src/components/save-button/save-button.ts ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+__webpack_require__(/*! ./save-button.scss */ "./src/components/save-button/save-button.scss");
+class SaveButton {
+    constructor(task) {
+        this.handleButtonClick = () => {
+            this.saveToLocalStorage();
+        };
+        this.task = task;
+        this.initialize();
+        this.setEventsHandlers();
+    }
+    initialize() {
+        this.button = this.task.container.querySelector('.save-button');
+    }
+    setEventsHandlers() {
+        this.button.addEventListener('click', this.handleButtonClick);
+    }
+    saveToLocalStorage() {
+        /* this.task.resultCanvasManager.canvas.toBlob((blob: Blob) => {
+          localStorage.setItem('lastDrawing', blob);
+        }); */
+        const image = this.task.resultCanvasManager.canvas.toDataURL('image/png') /* .replace('image/png', 'image/octet-stream') */;
+        localStorage.setItem('lastDrawing', image);
+    }
+}
+exports.default = SaveButton;
+
+
+/***/ }),
+
 /***/ "./src/components/task/brush-type.ts":
 /*!*******************************************!*\
   !*** ./src/components/task/brush-type.ts ***!
@@ -1444,7 +1543,7 @@ class CanvasManager {
             this.canvas.height = this.height;
         };
         this.erase = (position, brushRadius) => {
-            this.context.clearRect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+            this.context.clearRect(position.x - brushRadius, position.y - brushRadius, brushRadius * 2, brushRadius * 2);
         };
         this.beginDrawing = (position, brushRadius) => {
             if (brushRadius < 20) {
@@ -1527,7 +1626,7 @@ class CanvasManager {
         }
         else if (brushType === brush_type_1.default.eraser) {
             this.context.beginPath();
-            this.context.rect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+            this.context.rect(position.x - brushRadius, position.y - brushRadius, brushRadius * 2, brushRadius * 2);
             this.context.closePath();
             this.context.strokeStyle = 'black';
             this.context.stroke();
@@ -1636,6 +1735,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 const file_saver_1 = __webpack_require__(/*! file-saver */ "./node_modules/file-saver/dist/FileSaver.min.js");
+const constants_1 = __importDefault(__webpack_require__(/*! ../../assets/constants */ "./src/assets/constants.ts"));
 const Vector_1 = __importDefault(__webpack_require__(/*! ../../assets/Vector */ "./src/assets/Vector.ts"));
 const Event_1 = __importDefault(__webpack_require__(/*! ../../assets/Events/Event */ "./src/assets/Events/Event.ts"));
 const compilationOptions_1 = __importDefault(__webpack_require__(/*! ../../compilationOptions */ "./src/compilationOptions.ts"));
@@ -1647,6 +1747,7 @@ const toolsManager_1 = __importDefault(__webpack_require__(/*! ./toolsManager */
 const EventArgs_1 = __importDefault(__webpack_require__(/*! ../../assets/Events/EventArgs */ "./src/assets/Events/EventArgs.ts"));
 const undo_button_1 = __importDefault(__webpack_require__(/*! ../undo-button/undo-button */ "./src/components/undo-button/undo-button.ts"));
 __webpack_require__(/*! ./task.scss */ "./src/components/task/task.scss");
+const save_button_1 = __importDefault(__webpack_require__(/*! ../save-button/save-button */ "./src/components/save-button/save-button.ts"));
 class Task {
     constructor(container) {
         this.onStartDrawing = new Event_1.default();
@@ -1726,7 +1827,8 @@ class Task {
         this.map.draw(this.mapCanvasManager);
         this.toolsManager = new toolsManager_1.default(this);
         this.undoButton = new undo_button_1.default(this);
-        this.tempCanvasManager.canvas.style.opacity = `${this.toolsManager.opacity}`;
+        this.saveToLocalStorageButton = new save_button_1.default(this);
+        this.tempCanvasManager.canvas.style.opacity = `${constants_1.default.OPACITY}`;
     }
     initialize() {
         // eslint-disable-next-line no-mixed-operators
@@ -1743,7 +1845,6 @@ class Task {
         this.resultCanvasManager = new canvas_manager_1.default(resultCanvas, this.canvasWidth, this.canvasHeight);
         const tempCanvas = (this.container.querySelector('.task__temp-canvas'));
         this.tempCanvasManager = new canvas_manager_1.default(tempCanvas, this.canvasWidth, this.canvasHeight);
-        /* this.tempCanvasManager.canvas.style.opacity = `${this.toolsManager.opacity}`; */
         const cursorCanvas = (this.container.querySelector('.task__cursor-canvas'));
         this.cursorCanvasManager = new canvas_manager_1.default(cursorCanvas, this.canvasWidth, this.canvasHeight);
         const dropdownFormContainer = (this.container.querySelector('.task__dropdown-form'));
@@ -1751,6 +1852,21 @@ class Task {
         this.saveButton = this.container.querySelector('.dropdown-form__save-button');
         const drawingOptionsPanelContainer = (this.container.querySelector('.task__drawing-options-panel'));
         this.drawingOptionsPanel = new drawing_options_panel_1.default(drawingOptionsPanelContainer, this);
+        this.trySetDrawingFromLocalStorage();
+    }
+    initializeCanvases() {
+    }
+    trySetDrawingFromLocalStorage() {
+        const lastDrawing = localStorage.getItem('lastDrawing');
+        if (lastDrawing) {
+            const img = new Image();
+            img.src = lastDrawing;
+            img.onload = () => {
+                this.resultCanvasManager.context.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+                this.resultCanvasManager.context.globalAlpha = 1;
+                this.resultCanvasManager.context.drawImage(img, 0, 0);
+            };
+        }
     }
     setEventsHandlers() {
         this.cursorCanvasManager.canvas.ondragstart = () => false;
@@ -1817,11 +1933,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const constants_1 = __importDefault(__webpack_require__(/*! ../../assets/constants */ "./src/assets/constants.ts"));
 const brush_type_1 = __importDefault(__webpack_require__(/*! ./brush-type */ "./src/components/task/brush-type.ts"));
 class ToolsManager {
     constructor(task) {
-        this.brushRadius = 50;
-        this.opacity = 0.5;
+        this.brushRadius = constants_1.default.BRUSH_RADIUS;
+        this.opacity = constants_1.default.OPACITY;
         this.brushType = brush_type_1.default.brush;
         this.setEventsHandlers = () => {
             this.task.onStartDrawing.subscribe(this.mouseDown);
@@ -1918,9 +2035,11 @@ class UndoButton {
             this.undo();
         };
         this.saveLastDrawingState = () => {
-            this.task.resultCanvasManager.canvas.toBlob((blob) => {
-                this.drawingStates.add(blob);
-            });
+            /* this.task.resultCanvasManager.canvas.toBlob((blob: Blob) => {
+              this.drawingStates.add(blob);
+            }); */
+            const imageDataURL = this.task.resultCanvasManager.canvas.toDataURL('image/png');
+            this.drawingStates.add(imageDataURL);
         };
         this.task = task;
         this.drawingStates = new linked_list_1.default();
@@ -1941,7 +2060,7 @@ class UndoButton {
             return;
         this.drawingStates.removeLast();
         const img = new Image();
-        img.src = URL.createObjectURL(this.drawingStates.head.value);
+        img.src = /* URL.createObjectURL(this.drawingStates.head.value) */ this.drawingStates.head.value;
         img.onload = () => {
             this.task.resultCanvasManager.context.clearRect(0, 0, this.task.canvasWidth, this.task.canvasHeight);
             this.task.resultCanvasManager.context.globalAlpha = 1;
@@ -2080,4 +2199,4 @@ const task = new task_1.default(container);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map?v=006bb36ecec8f85eb90e
+//# sourceMappingURL=demo.js.map?v=b420cf18daa38e61361a
