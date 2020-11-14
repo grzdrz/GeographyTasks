@@ -49,15 +49,16 @@ class Task {
   constructor(container: HTMLElement) {
     this.container = container;
 
-    this.toolsManager = new ToolsManager(this);
-    this.undoButton = new UndoButton(this);
-
     this.initialize();
     this.setEventsHandlers();
 
     const mapSize = new Vector(this.canvasWidth, this.canvasHeight);
     this.map = new ContourMap(`${compilationOptions.forGithubPages ? '/GeographyTasks' : ''}/src/data/russia.jpg`, mapSize);
     this.map.draw(this.mapCanvasManager);
+
+    this.toolsManager = new ToolsManager(this);
+    this.undoButton = new UndoButton(this);
+    this.tempCanvasManager.canvas.style.opacity = `${this.toolsManager.opacity}`;
   }
 
   initialize(): void {
@@ -78,7 +79,7 @@ class Task {
 
     const tempCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__temp-canvas'));
     this.tempCanvasManager = new CanvasManager(tempCanvas, this.canvasWidth, this.canvasHeight);
-    this.tempCanvasManager.canvas.style.opacity = `${this.toolsManager.opacity}`;
+    /* this.tempCanvasManager.canvas.style.opacity = `${this.toolsManager.opacity}`; */
 
     const cursorCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__cursor-canvas'));
     this.cursorCanvasManager = new CanvasManager(cursorCanvas, this.canvasWidth, this.canvasHeight);
