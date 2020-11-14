@@ -1,3 +1,4 @@
+import constants from '../../assets/constants';
 import BrushType from '../task/brush-type';
 import Task from '../task/task';
 import './drawing-options-panel.scss';
@@ -20,8 +21,8 @@ class DrawingOptionsPanel {
     this.setEventsHandlers();
 
     this.brush.checked = true;
-    this.opacityInput.value = '0.5';
-    this.brushSizeInput.value = '50';
+    this.opacityInput.value = `${constants.OPACITY}`;
+    this.brushSizeInput.value = `${constants.BRUSH_RADIUS}`;
   }
 
   initialize(): void {

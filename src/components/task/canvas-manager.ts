@@ -35,7 +35,7 @@ class CanvasManager {
   };
 
   erase = (position: Vector, brushRadius: number): void => {
-    this.context.clearRect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+    this.context.clearRect(position.x - brushRadius, position.y - brushRadius, brushRadius * 2, brushRadius * 2);
   };
 
   beginDrawing = (position: Vector, brushRadius: number): void => {
@@ -110,7 +110,7 @@ class CanvasManager {
       this.context.stroke();
     } else if (brushType === BrushType.eraser) {
       this.context.beginPath();
-      this.context.rect(position.x - brushRadius / 2, position.y - brushRadius / 2, brushRadius, brushRadius);
+      this.context.rect(position.x - brushRadius, position.y - brushRadius, brushRadius * 2, brushRadius * 2);
       this.context.closePath();
       this.context.strokeStyle = 'black';
       this.context.stroke();

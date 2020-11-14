@@ -1,15 +1,14 @@
+import EventArgs from '../../assets/Events/EventArgs';
+import constants from '../../assets/constants';
 import IMouseData from '../../assets/Events/ArgTypes/IMouseData';
-import Vector from '../../assets/vector';
-import Event from '../../assets/Events/Event';
 import BrushType from './brush-type';
 import Task from './task';
-import EventArgs from '../../assets/Events/EventArgs';
 
 class ToolsManager {
   public task: Task;
 
-  public brushRadius = 50;
-  public opacity = 0.5;
+  public brushRadius = constants.BRUSH_RADIUS;
+  public opacity = constants.OPACITY;
   public brushType = BrushType.brush;
 
   constructor(task: Task) {

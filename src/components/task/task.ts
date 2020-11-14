@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import { saveAs } from 'file-saver';
 
+import constants from '../../assets/constants';
 import Vector from '../../assets/Vector';
 import Event from '../../assets/Events/Event';
 import compilationOptions from '../../compilationOptions';
@@ -16,6 +17,7 @@ import IMouseData from '../../assets/Events/ArgTypes/IMouseData';
 import UndoButton from '../undo-button/undo-button';
 
 import './task.scss';
+import SaveButton from '../save-button/save-button';
 
 class Task {
   public container: HTMLElement;
@@ -33,6 +35,7 @@ class Task {
 
   public toolsManager: ToolsManager;
   public undoButton: UndoButton;
+  public saveToLocalStorageButton: SaveButton;
 
   public drawingOptionsPanel: DrawingOptionsPanel;
   public dropdownForm: DropdownForm;
@@ -58,7 +61,8 @@ class Task {
 
     this.toolsManager = new ToolsManager(this);
     this.undoButton = new UndoButton(this);
-    this.tempCanvasManager.canvas.style.opacity = `${this.toolsManager.opacity}`;
+    this.saveToLocalStorageButton = new SaveButton(this);
+    this.tempCanvasManager.canvas.style.opacity = `${constants.OPACITY}`;
   }
 
   initialize(): void {
@@ -79,7 +83,6 @@ class Task {
 
     const tempCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__temp-canvas'));
     this.tempCanvasManager = new CanvasManager(tempCanvas, this.canvasWidth, this.canvasHeight);
-    /* this.tempCanvasManager.canvas.style.opacity = `${this.toolsManager.opacity}`; */
 
     const cursorCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__cursor-canvas'));
     this.cursorCanvasManager = new CanvasManager(cursorCanvas, this.canvasWidth, this.canvasHeight);
@@ -90,6 +93,25 @@ class Task {
 
     const drawingOptionsPanelContainer = <HTMLElement>(this.container.querySelector('.task__drawing-options-panel'));
     this.drawingOptionsPanel = new DrawingOptionsPanel(drawingOptionsPanelContainer, this);
+
+    this.trySetDrawingFromLocalStorage();
+  }
+
+  initializeCanvases(): void {
+
+  }
+
+  trySetDrawingFromLocalStorage(): void {
+    const lastDrawing = localStorage.getItem('lastDrawing');
+    if (lastDrawing) {
+      const img = new Image();
+      img.src = lastDrawing;
+      img.onload = () => {
+        this.resultCanvasManager.context.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+        this.resultCanvasManager.context.globalAlpha = 1;
+        this.resultCanvasManager.context.drawImage(img, 0, 0);
+      };
+    }
   }
 
   setEventsHandlers(): void {

@@ -8,12 +8,12 @@ class UndoButton {
   public task: Task;
   public button: HTMLElement;
 
-  public drawingStates: LinkedList<Blob>;
+  public drawingStates: LinkedList</* Blob */string>;
 
   constructor(task: Task) {
     this.task = task;
 
-    this.drawingStates = new LinkedList<Blob>();
+    this.drawingStates = new LinkedList</* Blob */string>();
 
     this.initialize();
     this.setEventsHandlers();
@@ -41,7 +41,7 @@ class UndoButton {
 
     this.drawingStates.removeLast();
     const img = new Image();
-    img.src = URL.createObjectURL(this.drawingStates.head.value);
+    img.src = /* URL.createObjectURL(this.drawingStates.head.value) */this.drawingStates.head.value;
     img.onload = () => {
       this.task.resultCanvasManager.context.clearRect(0, 0, this.task.canvasWidth, this.task.canvasHeight);
       this.task.resultCanvasManager.context.globalAlpha = 1;
@@ -50,9 +50,11 @@ class UndoButton {
   }
 
   saveLastDrawingState = (): void => {
-    this.task.resultCanvasManager.canvas.toBlob((blob: Blob) => {
+    /* this.task.resultCanvasManager.canvas.toBlob((blob: Blob) => {
       this.drawingStates.add(blob);
-    });
+    }); */
+    const imageDataURL = this.task.resultCanvasManager.canvas.toDataURL('image/png');
+    this.drawingStates.add(imageDataURL);
   };
 }
 
