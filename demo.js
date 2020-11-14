@@ -818,7 +818,7 @@ exports.default = Vector;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const constants = {
-    OPACITY: 0.8,
+    OPACITY: 0.7,
     BRUSH_RADIUS: 3,
 };
 exports.default = constants;
@@ -1757,10 +1757,11 @@ class Task {
         this.onMouseMove = new Event_1.default();
         this.onMouseOut = new Event_1.default();
         this.isDoubleTouch = false;
+        this.touchIdentifier = -1;
         this.handleStartDrawing = (event) => {
             if (event instanceof TouchEvent) {
-                if (event.changedTouches.length > 1)
-                    return;
+                // console.log(`length: ${event.changedTouches.length}, id: ${[...event.changedTouches].reduce((sum, touch) => `${touch.identifier}, `, '')}`);
+                this.testField.textContent = `length: ${event.changedTouches.length}, id: ${[...event.changedTouches].reduce((sum, touch) => `${touch.identifier}, `, '')}`;
                 if (!this.isDoubleTouch) {
                     this.isDoubleTouch = true;
                     setTimeout(() => {
@@ -1855,6 +1856,7 @@ class Task {
         const drawingOptionsPanelContainer = (this.container.querySelector('.task__drawing-options-panel'));
         this.drawingOptionsPanel = new drawing_options_panel_1.default(drawingOptionsPanelContainer, this);
         this.trySetDrawingFromLocalStorage();
+        this.testField = document.querySelector('.TEST');
     }
     initializeCanvases() {
     }
@@ -2201,4 +2203,4 @@ const task = new task_1.default(container);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map?v=db077e7ce358331fd3ec
+//# sourceMappingURL=demo.js.map?v=5c280c47d0a691b42257

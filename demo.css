@@ -277,6 +277,11 @@
   .task__map-canvas, .task__result-canvas, .task__temp-canvas, .task__cursor-canvas {
     position: absolute; }
 
+.TEST {
+  width: 200px;
+  height: 50px;
+  border: 1px solid black; }
+
 .save-button {
   cursor: pointer;
   height: 50px;
