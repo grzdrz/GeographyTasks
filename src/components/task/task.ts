@@ -8,15 +8,14 @@ import Event from '../../assets/Events/Event';
 import compilationOptions from '../../compilationOptions';
 import DropdownForm from '../dropdown-form/dropdown-form';
 import DrawingOptionsPanel from '../drawing-options-panel/drawing-options-panel';
-import BrushType from './brush-type';
 import CanvasManager from './canvas-manager';
 import ContourMap from './contour-map';
 import ToolsManager from './toolsManager';
 import EventArgs from '../../assets/Events/EventArgs';
 import IMouseData from '../../assets/Events/ArgTypes/IMouseData';
+import UndoButton from '../undo-button/undo-button';
 
 import './task.scss';
-import LinkedList from '../../assets/LinkedList/linked-list';
 
 class Task {
   public container: HTMLElement;
@@ -33,6 +32,7 @@ class Task {
   public map: ContourMap;
 
   public toolsManager: ToolsManager;
+  public undoButton: UndoButton;
 
   public drawingOptionsPanel: DrawingOptionsPanel;
   public dropdownForm: DropdownForm;
@@ -50,6 +50,7 @@ class Task {
     this.container = container;
 
     this.toolsManager = new ToolsManager(this);
+    this.undoButton = new UndoButton(this);
 
     this.initialize();
     this.setEventsHandlers();
@@ -88,8 +89,6 @@ class Task {
 
     const drawingOptionsPanelContainer = <HTMLElement>(this.container.querySelector('.task__drawing-options-panel'));
     this.drawingOptionsPanel = new DrawingOptionsPanel(drawingOptionsPanelContainer, this);
-
-    this.toolsManager.initialize();
   }
 
   setEventsHandlers(): void {
@@ -123,8 +122,6 @@ class Task {
         }
       }, 500);
     });
-
-    this.toolsManager.setEventsHandlers();
   }
 
   public isDoubleTouch = false;

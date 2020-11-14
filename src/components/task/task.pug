@@ -1,4 +1,5 @@
 include ../dropdown-form/dropdown-form
+include ../undo-button/undo-button
 include ../drawing-options-panel/drawing-options-panel
 
 mixin task()
@@ -6,6 +7,8 @@ mixin task()
     div(class=["task__options-bar"])
       div(class=["task__dropdown-form"])
         +dropdown-form()
+      div(class=["task__undo-button"])
+        +undo-button()
       div(class=["task__drawing-options-panel"])
         +drawing-options-panel()
     div(class=["task__canvases"])

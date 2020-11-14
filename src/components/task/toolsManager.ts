@@ -14,6 +14,9 @@ class ToolsManager {
 
   constructor(task: Task) {
     this.task = task;
+
+    this.initialize();
+    this.setEventsHandlers();
   }
 
   initialize() {

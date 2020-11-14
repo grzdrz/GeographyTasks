@@ -18,14 +18,22 @@ class Iterator<TValue> {
   }
 
   next(): IIteratorResult<TValue> {
-    const result = {
-      value: this.current,
-      done: this.isDone,
-    };
-    if (this.isDone) return result;
+    let result: IIteratorResult<TValue>;
+    if (this.list.head === undefined || this.list.tail === undefined) {
+      result = {
+        value: undefined,
+        done: true,
+      };
+    } else {
+      result = {
+        value: this.current,
+        done: this.isDone,
+      };
+      if (this.isDone) return result;
 
-    this.current = this.current.next;
-    this.isDone = this.current === undefined;
+      this.current = this.current.next;
+      this.isDone = this.current === undefined;
+    }
     return result;
   }
 }
