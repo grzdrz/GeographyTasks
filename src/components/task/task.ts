@@ -5,19 +5,18 @@ import { saveAs } from 'file-saver';
 
 import constants from '../../assets/constants';
 import Vector from '../../assets/Vector';
-import Event from '../../assets/Events/Event';
+import Event from '../../assets/event/event';
 import compilationOptions from '../../compilationOptions';
 import DropdownForm from '../dropdown-form/dropdown-form';
 import DrawingOptionsPanel from '../drawing-options-panel/drawing-options-panel';
 import CanvasManager from './canvas-manager';
 import ContourMap from './contour-map';
-import ToolsManager from './toolsManager';
-import EventArgs from '../../assets/Events/EventArgs';
-import IMouseData from '../../assets/Events/ArgTypes/IMouseData';
+import ToolsManager from '../drawing-options-panel/tools-manager';
+import EventArgs from '../../assets/event/event-args';
+import IMouseData from '../../assets/event/arg-data-types/mouse-data-type';
 import UndoButton from '../undo-button/undo-button';
 
 import './task.scss';
-import SaveButton from '../save-button/save-button';
 
 class Task {
   public container: HTMLElement;
@@ -33,9 +32,7 @@ class Task {
 
   public map: ContourMap;
 
-  public toolsManager: ToolsManager;
   public undoButton: UndoButton;
-  public saveToLocalStorageButton: SaveButton;
 
   public drawingOptionsPanel: DrawingOptionsPanel;
   public dropdownForm: DropdownForm;
@@ -59,62 +56,30 @@ class Task {
     this.map = new ContourMap(`${compilationOptions.forGithubPages ? '/GeographyTasks' : ''}/src/data/russia.jpg`, mapSize);
     this.map.draw(this.mapCanvasManager);
 
-    this.toolsManager = new ToolsManager(this);
     this.undoButton = new UndoButton(this);
-    this.saveToLocalStorageButton = new SaveButton(this);
     this.tempCanvasManager.canvas.style.opacity = `${constants.OPACITY}`;
   }
 
   initialize(): void {
-    // eslint-disable-next-line no-mixed-operators
-    let biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
-    if (biggestSide < 1000) biggestSide = 1000;
-    this.canvasWidth = biggestSide - biggestSide * 0.0;
-    this.canvasHeight = biggestSide * 0.5;
+    const biggestSide = this.calculateBiggestSide();
 
     this.canvasesContainer = <HTMLElement>(this.container.querySelector('.task__canvases'));
     this.canvasesContainer.style.height = `${biggestSide * 0.5}px`;
 
     const mapCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__map-canvas'));
-    this.mapCanvasManager = new CanvasManager(mapCanvas, this.canvasWidth, this.canvasHeight);
-
     const resultCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__result-canvas'));
-    this.resultCanvasManager = new CanvasManager(resultCanvas, this.canvasWidth, this.canvasHeight);
-
     const tempCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__temp-canvas'));
-    this.tempCanvasManager = new CanvasManager(tempCanvas, this.canvasWidth, this.canvasHeight);
-
     const cursorCanvas = <HTMLCanvasElement>(this.container.querySelector('.task__cursor-canvas'));
-    this.cursorCanvasManager = new CanvasManager(cursorCanvas, this.canvasWidth, this.canvasHeight);
-
     const dropdownFormContainer = <HTMLElement>(this.container.querySelector('.task__dropdown-form'));
-    this.dropdownForm = new DropdownForm(dropdownFormContainer);
+    const drawingOptionsPanelContainer = <HTMLElement>(this.container.querySelector('.task__drawing-options-panel'));
     this.saveButton = this.container.querySelector('.dropdown-form__save-button');
 
-    const drawingOptionsPanelContainer = <HTMLElement>(this.container.querySelector('.task__drawing-options-panel'));
+    this.mapCanvasManager = new CanvasManager(mapCanvas, this.canvasWidth, this.canvasHeight);
+    this.resultCanvasManager = new CanvasManager(resultCanvas, this.canvasWidth, this.canvasHeight);
+    this.tempCanvasManager = new CanvasManager(tempCanvas, this.canvasWidth, this.canvasHeight);
+    this.cursorCanvasManager = new CanvasManager(cursorCanvas, this.canvasWidth, this.canvasHeight);
+    this.dropdownForm = new DropdownForm(dropdownFormContainer);
     this.drawingOptionsPanel = new DrawingOptionsPanel(drawingOptionsPanelContainer, this);
-
-    this.trySetDrawingFromLocalStorage();
-
-    this.testField = document.querySelector('.TEST');
-  }
-  public testField: HTMLElement;
-
-  initializeCanvases(): void {
-
-  }
-
-  trySetDrawingFromLocalStorage(): void {
-    const lastDrawing = localStorage.getItem('lastDrawing');
-    if (lastDrawing) {
-      const img = new Image();
-      img.src = lastDrawing;
-      img.onload = () => {
-        this.resultCanvasManager.context.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-        this.resultCanvasManager.context.globalAlpha = 1;
-        this.resultCanvasManager.context.drawImage(img, 0, 0);
-      };
-    }
   }
 
   setEventsHandlers(): void {
@@ -125,37 +90,36 @@ class Task {
     this.cursorCanvasManager.canvas.addEventListener('mouseover', this.handleCanvasMouseOver);
 
     // eslint-disable-next-line fsd/no-function-declaration-in-event-listener
-    this.saveButton.addEventListener('click', () => {
-      const can3 = document.createElement('canvas');
-      can3.width = this.mapCanvasManager.width;
-      can3.height = this.mapCanvasManager.height;
-      const ctx3 = can3.getContext('2d');
-
-      ctx3.drawImage(this.mapCanvasManager.canvas, 0, 0);
-      ctx3.globalAlpha = 0.5;
-      ctx3.drawImage(this.resultCanvasManager.canvas, 0, 0);
-      ctx3.globalAlpha = 1;
-
-      let blobImage: Blob;
-      can3.toBlob((blob: Blob) => {
-        blobImage = blob;
-      });
-
-      const timerId = setInterval(() => {
-        if (blobImage) {
-          clearInterval(timerId);
-          saveAs(blobImage, 'pretty image.png');
-        }
-      }, 500);
-    });
+    this.saveButton.addEventListener('click', this.handleSaveButton);
   }
+
+  calculateBiggestSide(): number {
+    let biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
+    if (biggestSide < 1000) biggestSide = 1000;
+    this.canvasWidth = biggestSide - biggestSide * 0.0;
+    this.canvasHeight = biggestSide * 0.5;
+    return biggestSide;
+  }
+
+  public handleSaveButton = (): void => {
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = this.mapCanvasManager.width;
+    tempCanvas.height = this.mapCanvasManager.height;
+    const tempContext = tempCanvas.getContext('2d');
+
+    tempContext.drawImage(this.mapCanvasManager.canvas, 0, 0);
+    tempContext.globalAlpha = 1;
+    tempContext.drawImage(this.resultCanvasManager.canvas, 0, 0);
+
+    tempCanvas.toBlob((blob: Blob) => {
+      saveAs(blob, 'pretty image.png');
+    });
+  };
 
   public isDoubleTouch = false;
   public touchIdentifier = -1;
   handleStartDrawing = (event: UIEvent): void => {
     if (event instanceof TouchEvent) {
-      // console.log(`length: ${event.changedTouches.length}, id: ${[...event.changedTouches].reduce((sum, touch) => `${touch.identifier}, `, '')}`);
-      this.testField.textContent = `length: ${event.changedTouches.length}, id: ${[...event.changedTouches].reduce((sum, touch) => `${touch.identifier}, `, '')}`;
       if (event.changedTouches[0].identifier > 0) return;
       if (!this.isDoubleTouch) {
         this.isDoubleTouch = true;

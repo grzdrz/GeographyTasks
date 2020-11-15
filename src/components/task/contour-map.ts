@@ -19,12 +19,6 @@ class ContourMap {
     };
   }
 
-  /* public initialize(): void {
-  }
-
-  public update(isSelected: boolean, gameTime: DOMHighResTimeStamp): void {
-  } */
-
   public draw(canvas: CanvasManager): void {
     if (!this.isImageLoaded) {
       const timerId = setInterval(() => {

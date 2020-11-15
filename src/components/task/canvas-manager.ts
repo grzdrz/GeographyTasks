@@ -1,10 +1,9 @@
 /* eslint-disable prefer-rest-params */
 /* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { makeDebounce, throttle } from '../../assets/helpers';
 import Vector from '../../assets/Vector';
-import BrushType from './brush-type';
-import IDrawableImage from './i-drawable-image';
+import BrushType from './types/brush-type';
+import IDrawableImage from './types/drawable-image-type';
 
 class CanvasManager {
   public canvas: HTMLCanvasElement;

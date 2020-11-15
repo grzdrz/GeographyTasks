@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-return */
-import LinkedList from '../../assets/LinkedList/linked-list';
+import LinkedList from '../../assets/linked-list/linked-list';
 import Task from '../task/task';
 
 import './undo-button.scss';
@@ -18,7 +18,7 @@ class UndoButton {
     this.initialize();
     this.setEventsHandlers();
 
-    this.saveLastDrawingState();
+    this.trySetDrawingFromLocalStorage();
   }
 
   initialize(): void {
@@ -29,7 +29,23 @@ class UndoButton {
     this.button.addEventListener('click', this.handleButtonClick);
 
     this.task.onDrawingEnding.subscribe(this.saveLastDrawingState);
+    this.task.onDrawingEnding.subscribe(this.saveToLocalStorage);
   }
+
+  trySetDrawingFromLocalStorage = (): void => {
+    const lastDrawing = localStorage.getItem('lastDrawing');
+    if (lastDrawing) {
+      const img = new Image();
+      img.src = lastDrawing;
+      img.onload = () => {
+        this.task.resultCanvasManager.context.clearRect(0, 0, this.task.canvasWidth, this.task.canvasHeight);
+        this.task.resultCanvasManager.context.globalAlpha = 1;
+        this.task.resultCanvasManager.context.drawImage(img, 0, 0);
+
+        this.saveLastDrawingState();
+      };
+    }
+  };
 
   handleButtonClick = (): void => {
     this.undo();
@@ -46,6 +62,8 @@ class UndoButton {
       this.task.resultCanvasManager.context.clearRect(0, 0, this.task.canvasWidth, this.task.canvasHeight);
       this.task.resultCanvasManager.context.globalAlpha = 1;
       this.task.resultCanvasManager.context.drawImage(img, 0, 0);
+
+      this.saveToLocalStorage();
     };
   }
 
@@ -55,6 +73,11 @@ class UndoButton {
     }); */
     const imageDataURL = this.task.resultCanvasManager.canvas.toDataURL('image/png');
     this.drawingStates.add(imageDataURL);
+  };
+
+  saveToLocalStorage = (): void => {
+    const image = this.task.resultCanvasManager.canvas.toDataURL('image/png');
+    localStorage.setItem('lastDrawing', image);
   };
 }
 

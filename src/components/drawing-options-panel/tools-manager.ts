@@ -1,8 +1,8 @@
-import EventArgs from '../../assets/Events/EventArgs';
+import EventArgs from '../../assets/event/event-args';
 import constants from '../../assets/constants';
-import IMouseData from '../../assets/Events/ArgTypes/IMouseData';
-import BrushType from './brush-type';
-import Task from './task';
+import IMouseData from '../../assets/event/arg-data-types/mouse-data-type';
+import BrushType from '../task/types/brush-type';
+import Task from '../task/task';
 
 class ToolsManager {
   public task: Task;

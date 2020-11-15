@@ -1,7 +1,8 @@
 import constants from '../../assets/constants';
-import BrushType from '../task/brush-type';
+import BrushType from '../task/types/brush-type';
 import Task from '../task/task';
 import './drawing-options-panel.scss';
+import ToolsManager from './tools-manager';
 
 class DrawingOptionsPanel {
   public container: HTMLElement;
@@ -13,6 +14,8 @@ class DrawingOptionsPanel {
   public opacityInput: HTMLInputElement;
   public brushSizeInput: HTMLInputElement;
 
+  public toolsManager: ToolsManager;
+
   constructor(container: HTMLElement, task: Task) {
     this.container = container;
     this.task = task;
@@ -23,6 +26,8 @@ class DrawingOptionsPanel {
     this.brush.checked = true;
     this.opacityInput.value = `${constants.OPACITY}`;
     this.brushSizeInput.value = `${constants.BRUSH_RADIUS}`;
+
+    this.toolsManager = new ToolsManager(task);
   }
 
   initialize(): void {
@@ -47,15 +52,15 @@ class DrawingOptionsPanel {
 
     switch (name) {
       case 'brush': {
-        this.task.toolsManager.brushType = BrushType.brush;
+        this.toolsManager.brushType = BrushType.brush;
         break;
       }
       case 'eraser': {
-        this.task.toolsManager.brushType = BrushType.eraser;
+        this.toolsManager.brushType = BrushType.eraser;
         break;
       }
       default: {
-        this.task.toolsManager.brushType = BrushType.brush;
+        this.toolsManager.brushType = BrushType.brush;
         break;
       }
     }
@@ -63,25 +68,25 @@ class DrawingOptionsPanel {
 
   handleOpacityInput = (event: Event): void => {
     const target = <HTMLInputElement>(event.target);
-    this.task.toolsManager.opacity = Number.parseFloat(target.value);
-    if (this.task.toolsManager.opacity < 0) {
+    this.toolsManager.opacity = Number.parseFloat(target.value);
+    if (this.toolsManager.opacity < 0) {
       target.value = '0';
-      this.task.toolsManager.opacity = 0;
-    } else if (this.task.toolsManager.opacity > 1) {
+      this.toolsManager.opacity = 0;
+    } else if (this.toolsManager.opacity > 1) {
       target.value = '1';
-      this.task.toolsManager.opacity = 1;
+      this.toolsManager.opacity = 1;
     }
   };
 
   handleBrushSizeInput = (event: Event): void => {
     const target = <HTMLInputElement>(event.target);
-    this.task.toolsManager.brushRadius = Number.parseInt(target.value, 10);
-    if (this.task.toolsManager.brushRadius < 1) {
+    this.toolsManager.brushRadius = Number.parseInt(target.value, 10);
+    if (this.toolsManager.brushRadius < 1) {
       target.value = '1';
-      this.task.toolsManager.brushRadius = 1;
-    } else if (this.task.toolsManager.brushRadius > 100) {
+      this.toolsManager.brushRadius = 1;
+    } else if (this.toolsManager.brushRadius > 100) {
       target.value = '100';
-      this.task.toolsManager.brushRadius = 100;
+      this.toolsManager.brushRadius = 100;
     }
   };
 
@@ -89,10 +94,10 @@ class DrawingOptionsPanel {
     const target = <HTMLInputElement>(event.target);
     const value = Number.parseFloat(target.value);
     if (value !== undefined && !Number.isNaN(value)) {
-      this.task.toolsManager.opacity = value;
+      this.toolsManager.opacity = value;
       target.value = `${value}`;
     } else {
-      this.task.toolsManager.opacity = 1;
+      this.toolsManager.opacity = 1;
       target.value = '1';
     }
   };
@@ -101,10 +106,10 @@ class DrawingOptionsPanel {
     const target = <HTMLInputElement>(event.target);
     const value = Number.parseFloat(target.value);
     if (value !== undefined && !Number.isNaN(value)) {
-      this.task.toolsManager.brushRadius = value;
+      this.toolsManager.brushRadius = value;
       target.value = `${value}`;
     } else {
-      this.task.toolsManager.brushRadius = 1;
+      this.toolsManager.brushRadius = 1;
       target.value = '1';
     }
   };

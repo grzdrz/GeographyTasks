@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import EventArgs from './EventArgs';
-import EventHandler from './EventHandler';
+import EventArgs from './event-args';
+import EventHandler from './event-handler';
 
 class Event<TData> {
   private handlers = new Array<EventHandler<TData>>();

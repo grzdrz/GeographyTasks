@@ -1,4 +1,4 @@
-import Vector from '../../assets/vector';
+import Vector from '../../../assets/vector';
 
 interface IDrawableImage {
   image: HTMLImageElement,
