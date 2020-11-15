@@ -860,4 +860,4 @@ __webpack_require__(/*! ./index.scss */ "./src/pages/index/index.scss");
 /***/ })
 
 /******/ });
-//# sourceMappingURL=index.js.map?v=7528aa4f85c4a75e7b2e
+//# sourceMappingURL=index.js.map?v=2cbe2d05e5d238ea5589

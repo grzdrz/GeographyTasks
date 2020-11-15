@@ -136,17 +136,6 @@
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/save-button/save-button.scss":
-/*!****************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/save-button/save-button.scss ***!
-  \****************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/task/task.scss":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/task/task.scss ***!
@@ -1433,74 +1422,6 @@ exports.default = DropdownForm;
 
 /***/ }),
 
-/***/ "./src/components/save-button/save-button.scss":
-/*!*****************************************************!*\
-  !*** ./src/components/save-button/save-button.scss ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./save-button.scss */ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/save-button/save-button.scss");
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-
-
-module.exports = content.locals || {};
-
-/***/ }),
-
-/***/ "./src/components/save-button/save-button.ts":
-/*!***************************************************!*\
-  !*** ./src/components/save-button/save-button.ts ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(/*! ./save-button.scss */ "./src/components/save-button/save-button.scss");
-class SaveButton {
-    constructor(task) {
-        this.handleButtonClick = () => {
-            this.saveToLocalStorage();
-        };
-        this.task = task;
-        this.initialize();
-        this.setEventsHandlers();
-    }
-    initialize() {
-        this.button = this.task.container.querySelector('.save-button');
-    }
-    setEventsHandlers() {
-        this.button.addEventListener('click', this.handleButtonClick);
-    }
-    saveToLocalStorage() {
-        /* this.task.resultCanvasManager.canvas.toBlob((blob: Blob) => {
-          localStorage.setItem('lastDrawing', blob);
-        }); */
-        const image = this.task.resultCanvasManager.canvas.toDataURL('image/png') /* .replace('image/png', 'image/octet-stream') */;
-        localStorage.setItem('lastDrawing', image);
-    }
-}
-exports.default = SaveButton;
-
-
-/***/ }),
-
 /***/ "./src/components/task/brush-type.ts":
 /*!*******************************************!*\
   !*** ./src/components/task/brush-type.ts ***!
@@ -1743,11 +1664,10 @@ const dropdown_form_1 = __importDefault(__webpack_require__(/*! ../dropdown-form
 const drawing_options_panel_1 = __importDefault(__webpack_require__(/*! ../drawing-options-panel/drawing-options-panel */ "./src/components/drawing-options-panel/drawing-options-panel.ts"));
 const canvas_manager_1 = __importDefault(__webpack_require__(/*! ./canvas-manager */ "./src/components/task/canvas-manager.ts"));
 const contour_map_1 = __importDefault(__webpack_require__(/*! ./contour-map */ "./src/components/task/contour-map.ts"));
-const toolsManager_1 = __importDefault(__webpack_require__(/*! ./toolsManager */ "./src/components/task/toolsManager.ts"));
+const tools_manager_1 = __importDefault(__webpack_require__(/*! ./tools-manager */ "./src/components/task/tools-manager.ts"));
 const EventArgs_1 = __importDefault(__webpack_require__(/*! ../../assets/Events/EventArgs */ "./src/assets/Events/EventArgs.ts"));
 const undo_button_1 = __importDefault(__webpack_require__(/*! ../undo-button/undo-button */ "./src/components/undo-button/undo-button.ts"));
 __webpack_require__(/*! ./task.scss */ "./src/components/task/task.scss");
-const save_button_1 = __importDefault(__webpack_require__(/*! ../save-button/save-button */ "./src/components/save-button/save-button.ts"));
 class Task {
     constructor(container) {
         this.onStartDrawing = new Event_1.default();
@@ -1760,8 +1680,6 @@ class Task {
         this.touchIdentifier = -1;
         this.handleStartDrawing = (event) => {
             if (event instanceof TouchEvent) {
-                // console.log(`length: ${event.changedTouches.length}, id: ${[...event.changedTouches].reduce((sum, touch) => `${touch.identifier}, `, '')}`);
-                this.testField.textContent = `length: ${event.changedTouches.length}, id: ${[...event.changedTouches].reduce((sum, touch) => `${touch.identifier}, `, '')}`;
                 if (event.changedTouches[0].identifier > 0)
                     return;
                 if (!this.isDoubleTouch) {
@@ -1830,9 +1748,8 @@ class Task {
         const mapSize = new Vector_1.default(this.canvasWidth, this.canvasHeight);
         this.map = new contour_map_1.default(`${compilationOptions_1.default.forGithubPages ? '/GeographyTasks' : ''}/src/data/russia.jpg`, mapSize);
         this.map.draw(this.mapCanvasManager);
-        this.toolsManager = new toolsManager_1.default(this);
+        this.toolsManager = new tools_manager_1.default(this);
         this.undoButton = new undo_button_1.default(this);
-        this.saveToLocalStorageButton = new save_button_1.default(this);
         this.tempCanvasManager.canvas.style.opacity = `${constants_1.default.OPACITY}`;
     }
     initialize() {
@@ -1858,7 +1775,6 @@ class Task {
         const drawingOptionsPanelContainer = (this.container.querySelector('.task__drawing-options-panel'));
         this.drawingOptionsPanel = new drawing_options_panel_1.default(drawingOptionsPanelContainer, this);
         this.trySetDrawingFromLocalStorage();
-        this.testField = document.querySelector('.TEST');
     }
     initializeCanvases() {
     }
@@ -1926,10 +1842,10 @@ exports.default = Task;
 
 /***/ }),
 
-/***/ "./src/components/task/toolsManager.ts":
-/*!*********************************************!*\
-  !*** ./src/components/task/toolsManager.ts ***!
-  \*********************************************/
+/***/ "./src/components/task/tools-manager.ts":
+/*!**********************************************!*\
+  !*** ./src/components/task/tools-manager.ts ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2047,6 +1963,10 @@ class UndoButton {
             const imageDataURL = this.task.resultCanvasManager.canvas.toDataURL('image/png');
             this.drawingStates.add(imageDataURL);
         };
+        this.saveToLocalStorage = () => {
+            const image = this.task.resultCanvasManager.canvas.toDataURL('image/png');
+            localStorage.setItem('lastDrawing', image);
+        };
         this.task = task;
         this.drawingStates = new linked_list_1.default();
         this.initialize();
@@ -2059,6 +1979,7 @@ class UndoButton {
     setEventsHandlers() {
         this.button.addEventListener('click', this.handleButtonClick);
         this.task.onDrawingEnding.subscribe(this.saveLastDrawingState);
+        this.task.onDrawingEnding.subscribe(this.saveToLocalStorage);
     }
     undo() {
         const { length } = this.drawingStates;
@@ -2071,6 +1992,7 @@ class UndoButton {
             this.task.resultCanvasManager.context.clearRect(0, 0, this.task.canvasWidth, this.task.canvasHeight);
             this.task.resultCanvasManager.context.globalAlpha = 1;
             this.task.resultCanvasManager.context.drawImage(img, 0, 0);
+            this.saveToLocalStorage();
         };
     }
 }
@@ -2205,4 +2127,4 @@ const task = new task_1.default(container);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map?v=7528aa4f85c4a75e7b2e
+//# sourceMappingURL=demo.js.map?v=2cbe2d05e5d238ea5589
