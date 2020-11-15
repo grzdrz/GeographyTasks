@@ -545,178 +545,6 @@ webpackContext.id = "./src sync recursive \\.(ttf|eot|woff|woff2|svg|png|jpg)$";
 
 /***/ }),
 
-/***/ "./src/assets/Events/Event.ts":
-/*!************************************!*\
-  !*** ./src/assets/Events/Event.ts ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-class Event {
-    constructor() {
-        this.handlers = new Array();
-        this.invoke = (args) => {
-            this.handlers.forEach((eventHandler) => eventHandler(args));
-        };
-        this.subscribe = (handler) => {
-            this.handlers.push(handler);
-        };
-        this.unsubscribe = (handler) => {
-            const index = this.handlers.indexOf(handler);
-            if (index > -1) {
-                this.handlers.splice(index, 1);
-            }
-        };
-    }
-}
-exports.default = Event;
-
-
-/***/ }),
-
-/***/ "./src/assets/Events/EventArgs.ts":
-/*!****************************************!*\
-  !*** ./src/assets/Events/EventArgs.ts ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-class EventArgs {
-    constructor(data) {
-        this.data = data;
-    }
-}
-exports.default = EventArgs;
-
-
-/***/ }),
-
-/***/ "./src/assets/LinkedList/iterator.ts":
-/*!*******************************************!*\
-  !*** ./src/assets/LinkedList/iterator.ts ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-class Iterator {
-    constructor(list) {
-        this.list = list;
-        this.current = this.list.tail;
-        this.isDone = false;
-    }
-    next() {
-        let result;
-        if (this.list.head === undefined || this.list.tail === undefined) {
-            result = {
-                value: undefined,
-                done: true,
-            };
-        }
-        else {
-            result = {
-                value: this.current,
-                done: this.isDone,
-            };
-            if (this.isDone)
-                return result;
-            this.current = this.current.next;
-            this.isDone = this.current === undefined;
-        }
-        return result;
-    }
-}
-exports.default = Iterator;
-
-
-/***/ }),
-
-/***/ "./src/assets/LinkedList/linked-list.ts":
-/*!**********************************************!*\
-  !*** ./src/assets/LinkedList/linked-list.ts ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const iterator_1 = __importDefault(__webpack_require__(/*! ./iterator */ "./src/assets/LinkedList/iterator.ts"));
-class LinkedList {
-    constructor() {
-        this.initialize();
-    }
-    get length() {
-        let result = 0;
-        for (let item of this) {
-            result += 1;
-        }
-        return result;
-    }
-    initialize() {
-        this.head = undefined;
-        this.tail = this.head;
-    }
-    add(value) {
-        if (this.head === undefined || this.tail === undefined) {
-            const link = {
-                next: undefined,
-                previous: undefined,
-                value,
-            };
-            this.head = link;
-            this.tail = this.head;
-        }
-        else {
-            const link = {
-                next: undefined,
-                previous: this.head,
-                value,
-            };
-            this.head.next = link;
-            this.head = this.head.next;
-        }
-    }
-    removeLast() {
-        if (this.head) {
-            const lastLink = this.head;
-            this.head = this.head.previous;
-            if (this.head)
-                this.head.next = undefined;
-            return lastLink.value;
-        }
-        return null;
-    }
-    removeFirst() {
-        if (this.tail) {
-            const firstLink = this.tail;
-            this.tail = this.tail.next;
-            if (this.tail)
-                this.tail.previous = undefined;
-            return firstLink.value;
-        }
-        return null;
-    }
-    [Symbol.iterator]() {
-        return new iterator_1.default(this);
-    }
-}
-exports.default = LinkedList;
-
-
-/***/ }),
-
 /***/ "./src/assets/Vector.ts":
 /*!******************************!*\
   !*** ./src/assets/Vector.ts ***!
@@ -808,9 +636,61 @@ exports.default = Vector;
 Object.defineProperty(exports, "__esModule", { value: true });
 const constants = {
     OPACITY: 0.9,
-    BRUSH_RADIUS: 3,
+    BRUSH_RADIUS: 20,
 };
 exports.default = constants;
+
+
+/***/ }),
+
+/***/ "./src/assets/event/event-args.ts":
+/*!****************************************!*\
+  !*** ./src/assets/event/event-args.ts ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class EventArgs {
+    constructor(data) {
+        this.data = data;
+    }
+}
+exports.default = EventArgs;
+
+
+/***/ }),
+
+/***/ "./src/assets/event/event.ts":
+/*!***********************************!*\
+  !*** ./src/assets/event/event.ts ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class Event {
+    constructor() {
+        this.handlers = new Array();
+        this.invoke = (args) => {
+            this.handlers.forEach((eventHandler) => eventHandler(args));
+        };
+        this.subscribe = (handler) => {
+            this.handlers.push(handler);
+        };
+        this.unsubscribe = (handler) => {
+            const index = this.handlers.indexOf(handler);
+            if (index > -1) {
+                this.handlers.splice(index, 1);
+            }
+        };
+    }
+}
+exports.default = Event;
 
 
 /***/ }),
@@ -1104,6 +984,126 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/assets/linked-list/iterator.ts":
+/*!********************************************!*\
+  !*** ./src/assets/linked-list/iterator.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class Iterator {
+    constructor(list) {
+        this.list = list;
+        this.current = this.list.tail;
+        this.isDone = false;
+    }
+    next() {
+        let result;
+        if (this.list.head === undefined || this.list.tail === undefined) {
+            result = {
+                value: undefined,
+                done: true,
+            };
+        }
+        else {
+            result = {
+                value: this.current,
+                done: this.isDone,
+            };
+            if (this.isDone)
+                return result;
+            this.current = this.current.next;
+            this.isDone = this.current === undefined;
+        }
+        return result;
+    }
+}
+exports.default = Iterator;
+
+
+/***/ }),
+
+/***/ "./src/assets/linked-list/linked-list.ts":
+/*!***********************************************!*\
+  !*** ./src/assets/linked-list/linked-list.ts ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const iterator_1 = __importDefault(__webpack_require__(/*! ./iterator */ "./src/assets/linked-list/iterator.ts"));
+class LinkedList {
+    constructor() {
+        this.initialize();
+    }
+    get length() {
+        let result = 0;
+        for (let item of this) {
+            result += 1;
+        }
+        return result;
+    }
+    initialize() {
+        this.head = undefined;
+        this.tail = this.head;
+    }
+    add(value) {
+        if (this.head === undefined || this.tail === undefined) {
+            const link = {
+                next: undefined,
+                previous: undefined,
+                value,
+            };
+            this.head = link;
+            this.tail = this.head;
+        }
+        else {
+            const link = {
+                next: undefined,
+                previous: this.head,
+                value,
+            };
+            this.head.next = link;
+            this.head = this.head.next;
+        }
+    }
+    removeLast() {
+        if (this.head) {
+            const lastLink = this.head;
+            this.head = this.head.previous;
+            if (this.head)
+                this.head.next = undefined;
+            return lastLink.value;
+        }
+        return null;
+    }
+    removeFirst() {
+        if (this.tail) {
+            const firstLink = this.tail;
+            this.tail = this.tail.next;
+            if (this.tail)
+                this.tail.previous = undefined;
+            return firstLink.value;
+        }
+        return null;
+    }
+    [Symbol.iterator]() {
+        return new iterator_1.default(this);
+    }
+}
+exports.default = LinkedList;
+
+
+/***/ }),
+
 /***/ "./src/assets/vector.ts":
 /*!******************************!*\
   !*** ./src/assets/vector.ts ***!
@@ -1244,8 +1244,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const constants_1 = __importDefault(__webpack_require__(/*! ../../assets/constants */ "./src/assets/constants.ts"));
-const brush_type_1 = __importDefault(__webpack_require__(/*! ../task/brush-type */ "./src/components/task/brush-type.ts"));
+const brush_type_1 = __importDefault(__webpack_require__(/*! ../task/types/brush-type */ "./src/components/task/types/brush-type.ts"));
 __webpack_require__(/*! ./drawing-options-panel.scss */ "./src/components/drawing-options-panel/drawing-options-panel.scss");
+const tools_manager_1 = __importDefault(__webpack_require__(/*! ./tools-manager */ "./src/components/drawing-options-panel/tools-manager.ts"));
 class DrawingOptionsPanel {
     constructor(container, task) {
         this.handleRadioClick = (event) => {
@@ -1253,52 +1254,52 @@ class DrawingOptionsPanel {
             const { name } = target.dataset;
             switch (name) {
                 case 'brush': {
-                    this.task.toolsManager.brushType = brush_type_1.default.brush;
+                    this.toolsManager.brushType = brush_type_1.default.brush;
                     break;
                 }
                 case 'eraser': {
-                    this.task.toolsManager.brushType = brush_type_1.default.eraser;
+                    this.toolsManager.brushType = brush_type_1.default.eraser;
                     break;
                 }
                 default: {
-                    this.task.toolsManager.brushType = brush_type_1.default.brush;
+                    this.toolsManager.brushType = brush_type_1.default.brush;
                     break;
                 }
             }
         };
         this.handleOpacityInput = (event) => {
             const target = (event.target);
-            this.task.toolsManager.opacity = Number.parseFloat(target.value);
-            if (this.task.toolsManager.opacity < 0) {
+            this.toolsManager.opacity = Number.parseFloat(target.value);
+            if (this.toolsManager.opacity < 0) {
                 target.value = '0';
-                this.task.toolsManager.opacity = 0;
+                this.toolsManager.opacity = 0;
             }
-            else if (this.task.toolsManager.opacity > 1) {
+            else if (this.toolsManager.opacity > 1) {
                 target.value = '1';
-                this.task.toolsManager.opacity = 1;
+                this.toolsManager.opacity = 1;
             }
         };
         this.handleBrushSizeInput = (event) => {
             const target = (event.target);
-            this.task.toolsManager.brushRadius = Number.parseInt(target.value, 10);
-            if (this.task.toolsManager.brushRadius < 1) {
+            this.toolsManager.brushRadius = Number.parseInt(target.value, 10);
+            if (this.toolsManager.brushRadius < 1) {
                 target.value = '1';
-                this.task.toolsManager.brushRadius = 1;
+                this.toolsManager.brushRadius = 1;
             }
-            else if (this.task.toolsManager.brushRadius > 100) {
+            else if (this.toolsManager.brushRadius > 100) {
                 target.value = '100';
-                this.task.toolsManager.brushRadius = 100;
+                this.toolsManager.brushRadius = 100;
             }
         };
         this.handleOpacityChange = (event) => {
             const target = (event.target);
             const value = Number.parseFloat(target.value);
             if (value !== undefined && !Number.isNaN(value)) {
-                this.task.toolsManager.opacity = value;
+                this.toolsManager.opacity = value;
                 target.value = `${value}`;
             }
             else {
-                this.task.toolsManager.opacity = 1;
+                this.toolsManager.opacity = 1;
                 target.value = '1';
             }
         };
@@ -1306,11 +1307,11 @@ class DrawingOptionsPanel {
             const target = (event.target);
             const value = Number.parseFloat(target.value);
             if (value !== undefined && !Number.isNaN(value)) {
-                this.task.toolsManager.brushRadius = value;
+                this.toolsManager.brushRadius = value;
                 target.value = `${value}`;
             }
             else {
-                this.task.toolsManager.brushRadius = 1;
+                this.toolsManager.brushRadius = 1;
                 target.value = '1';
             }
         };
@@ -1321,6 +1322,7 @@ class DrawingOptionsPanel {
         this.brush.checked = true;
         this.opacityInput.value = `${constants_1.default.OPACITY}`;
         this.brushSizeInput.value = `${constants_1.default.BRUSH_RADIUS}`;
+        this.toolsManager = new tools_manager_1.default(task);
     }
     initialize() {
         this.eraser = this.container.querySelector('.drawing-options-panel__eraser');
@@ -1338,6 +1340,70 @@ class DrawingOptionsPanel {
     }
 }
 exports.default = DrawingOptionsPanel;
+
+
+/***/ }),
+
+/***/ "./src/components/drawing-options-panel/tools-manager.ts":
+/*!***************************************************************!*\
+  !*** ./src/components/drawing-options-panel/tools-manager.ts ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const constants_1 = __importDefault(__webpack_require__(/*! ../../assets/constants */ "./src/assets/constants.ts"));
+const brush_type_1 = __importDefault(__webpack_require__(/*! ../task/types/brush-type */ "./src/components/task/types/brush-type.ts"));
+class ToolsManager {
+    constructor(task) {
+        this.brushRadius = constants_1.default.BRUSH_RADIUS;
+        this.opacity = constants_1.default.OPACITY;
+        this.brushType = brush_type_1.default.brush;
+        this.setEventsHandlers = () => {
+            this.task.onStartDrawing.subscribe(this.mouseDown);
+            this.task.onContinuingDrawing.subscribe(this.mouseMove);
+            this.task.onDrawingEnding.subscribe(this.mouseUp);
+            this.task.onMouseOver.subscribe(this.mouseOver);
+            this.task.onMouseMove.subscribe(this.mouseOver);
+            this.task.onMouseOver.subscribe(this.mouseOut);
+        };
+        this.mouseDown = (args) => {
+            this.task.tempCanvasManager.canvas.style.opacity = `${this.opacity}`;
+            if (this.brushType === brush_type_1.default.brush)
+                this.task.tempCanvasManager.beginDrawing(args.data.mousePosition, this.brushRadius);
+            else if (this.brushType === brush_type_1.default.eraser)
+                this.task.resultCanvasManager.erase(args.data.mousePosition, this.brushRadius);
+        };
+        this.mouseMove = (args) => {
+            if (this.brushType === brush_type_1.default.brush)
+                this.task.tempCanvasManager.continuousDrawing(args.data.mousePosition, this.brushRadius);
+            else if (this.brushType === brush_type_1.default.eraser)
+                this.task.resultCanvasManager.erase(args.data.mousePosition, this.brushRadius);
+        };
+        this.mouseUp = () => {
+            this.task.resultCanvasManager.context.globalAlpha = this.opacity;
+            this.task.resultCanvasManager.context.drawImage(this.task.tempCanvasManager.canvas, 0, 0);
+            this.task.tempCanvasManager.context.clearRect(0, 0, this.task.resultCanvasManager.width, this.task.resultCanvasManager.height);
+        };
+        this.mouseOver = (args) => {
+            this.task.cursorCanvasManager.drawBrush(args.data.mousePosition, this.brushRadius, this.brushType);
+        };
+        this.mouseOut = () => {
+            this.task.cursorCanvasManager.context.clearRect(0, 0, this.task.cursorCanvasManager.width, this.task.cursorCanvasManager.height);
+        };
+        this.task = task;
+        this.initialize();
+        this.setEventsHandlers();
+    }
+    initialize() {
+    }
+}
+exports.default = ToolsManager;
 
 
 /***/ }),
@@ -1422,26 +1488,6 @@ exports.default = DropdownForm;
 
 /***/ }),
 
-/***/ "./src/components/task/brush-type.ts":
-/*!*******************************************!*\
-  !*** ./src/components/task/brush-type.ts ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var BrushType;
-(function (BrushType) {
-    BrushType[BrushType["brush"] = 0] = "brush";
-    BrushType[BrushType["eraser"] = 1] = "eraser";
-})(BrushType || (BrushType = {}));
-exports.default = BrushType;
-
-
-/***/ }),
-
 /***/ "./src/components/task/canvas-manager.ts":
 /*!***********************************************!*\
   !*** ./src/components/task/canvas-manager.ts ***!
@@ -1455,8 +1501,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable prefer-rest-params */
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const Vector_1 = __importDefault(__webpack_require__(/*! ../../assets/Vector */ "./src/assets/Vector.ts"));
-const brush_type_1 = __importDefault(__webpack_require__(/*! ./brush-type */ "./src/components/task/brush-type.ts"));
+const brush_type_1 = __importDefault(__webpack_require__(/*! ./types/brush-type */ "./src/components/task/types/brush-type.ts"));
 class CanvasManager {
     constructor(canvas, width, height) {
         this.setSize = () => {
@@ -1586,11 +1635,6 @@ class ContourMap {
             this.isImageLoaded = true;
         };
     }
-    /* public initialize(): void {
-    }
-  
-    public update(isSelected: boolean, gameTime: DOMHighResTimeStamp): void {
-    } */
     draw(canvas) {
         if (!this.isImageLoaded) {
             const timerId = setInterval(() => {
@@ -1658,24 +1702,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const file_saver_1 = __webpack_require__(/*! file-saver */ "./node_modules/file-saver/dist/FileSaver.min.js");
 const constants_1 = __importDefault(__webpack_require__(/*! ../../assets/constants */ "./src/assets/constants.ts"));
 const Vector_1 = __importDefault(__webpack_require__(/*! ../../assets/Vector */ "./src/assets/Vector.ts"));
-const Event_1 = __importDefault(__webpack_require__(/*! ../../assets/Events/Event */ "./src/assets/Events/Event.ts"));
+const event_1 = __importDefault(__webpack_require__(/*! ../../assets/event/event */ "./src/assets/event/event.ts"));
 const compilationOptions_1 = __importDefault(__webpack_require__(/*! ../../compilationOptions */ "./src/compilationOptions.ts"));
 const dropdown_form_1 = __importDefault(__webpack_require__(/*! ../dropdown-form/dropdown-form */ "./src/components/dropdown-form/dropdown-form.ts"));
 const drawing_options_panel_1 = __importDefault(__webpack_require__(/*! ../drawing-options-panel/drawing-options-panel */ "./src/components/drawing-options-panel/drawing-options-panel.ts"));
 const canvas_manager_1 = __importDefault(__webpack_require__(/*! ./canvas-manager */ "./src/components/task/canvas-manager.ts"));
 const contour_map_1 = __importDefault(__webpack_require__(/*! ./contour-map */ "./src/components/task/contour-map.ts"));
-const tools_manager_1 = __importDefault(__webpack_require__(/*! ./tools-manager */ "./src/components/task/tools-manager.ts"));
-const EventArgs_1 = __importDefault(__webpack_require__(/*! ../../assets/Events/EventArgs */ "./src/assets/Events/EventArgs.ts"));
+const event_args_1 = __importDefault(__webpack_require__(/*! ../../assets/event/event-args */ "./src/assets/event/event-args.ts"));
 const undo_button_1 = __importDefault(__webpack_require__(/*! ../undo-button/undo-button */ "./src/components/undo-button/undo-button.ts"));
 __webpack_require__(/*! ./task.scss */ "./src/components/task/task.scss");
 class Task {
     constructor(container) {
-        this.onStartDrawing = new Event_1.default();
-        this.onContinuingDrawing = new Event_1.default();
-        this.onDrawingEnding = new Event_1.default();
-        this.onMouseOver = new Event_1.default();
-        this.onMouseMove = new Event_1.default();
-        this.onMouseOut = new Event_1.default();
+        this.onStartDrawing = new event_1.default();
+        this.onContinuingDrawing = new event_1.default();
+        this.onDrawingEnding = new event_1.default();
+        this.onMouseOver = new event_1.default();
+        this.onMouseMove = new event_1.default();
+        this.onMouseOut = new event_1.default();
+        this.handleSaveButton = () => {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = this.mapCanvasManager.width;
+            tempCanvas.height = this.mapCanvasManager.height;
+            const tempContext = tempCanvas.getContext('2d');
+            tempContext.drawImage(this.mapCanvasManager.canvas, 0, 0);
+            tempContext.globalAlpha = 1;
+            tempContext.drawImage(this.resultCanvasManager.canvas, 0, 0);
+            tempCanvas.toBlob((blob) => {
+                file_saver_1.saveAs(blob, 'pretty image.png');
+            });
+        };
         this.isDoubleTouch = false;
         this.touchIdentifier = -1;
         this.handleStartDrawing = (event) => {
@@ -1697,13 +1752,13 @@ class Task {
             this.cursorCanvasManager.canvas.addEventListener('mouseup', this.handleEndDrawing);
             this.cursorCanvasManager.canvas.addEventListener('touchmove', this.handleContinuingDrawing);
             this.cursorCanvasManager.canvas.addEventListener('touchend', this.handleEndDrawing);
-            this.onStartDrawing.invoke(new EventArgs_1.default({
+            this.onStartDrawing.invoke(new event_args_1.default({
                 mousePosition: this.calculateMousePositionInsideCanvases(event),
                 button: event.button,
             }));
         };
         this.handleContinuingDrawing = (event) => {
-            this.onContinuingDrawing.invoke(new EventArgs_1.default({
+            this.onContinuingDrawing.invoke(new event_args_1.default({
                 mousePosition: this.calculateMousePositionInsideCanvases(event),
                 button: event.button,
             }));
@@ -1713,7 +1768,7 @@ class Task {
             this.cursorCanvasManager.canvas.removeEventListener('mouseup', this.handleEndDrawing);
             this.cursorCanvasManager.canvas.removeEventListener('touchmove', this.handleContinuingDrawing);
             this.cursorCanvasManager.canvas.removeEventListener('touchend', this.handleEndDrawing);
-            this.onDrawingEnding.invoke(new EventArgs_1.default({
+            this.onDrawingEnding.invoke(new event_args_1.default({
                 mousePosition: this.calculateMousePositionInsideCanvases(event),
                 button: event.button,
             }));
@@ -1723,13 +1778,13 @@ class Task {
                 return;
             this.cursorCanvasManager.canvas.addEventListener('mousemove', this.handleCanvasMouseMove);
             this.cursorCanvasManager.canvas.addEventListener('mouseout', this.handleCanvasMouseOut);
-            this.onMouseOver.invoke(new EventArgs_1.default({
+            this.onMouseOver.invoke(new event_args_1.default({
                 mousePosition: this.calculateMousePositionInsideCanvases(event),
                 button: event.button,
             }));
         };
         this.handleCanvasMouseMove = (event) => {
-            this.onMouseMove.invoke(new EventArgs_1.default({
+            this.onMouseMove.invoke(new event_args_1.default({
                 mousePosition: this.calculateMousePositionInsideCanvases(event),
                 button: event.button,
             }));
@@ -1737,7 +1792,7 @@ class Task {
         this.handleCanvasMouseOut = (event) => {
             this.cursorCanvasManager.canvas.removeEventListener('mousemove', this.handleCanvasMouseMove);
             this.cursorCanvasManager.canvas.removeEventListener('mouseout', this.handleCanvasMouseOut);
-            this.onMouseOut.invoke(new EventArgs_1.default({
+            this.onMouseOut.invoke(new event_args_1.default({
                 mousePosition: this.calculateMousePositionInsideCanvases(event),
                 button: event.button,
             }));
@@ -1748,47 +1803,26 @@ class Task {
         const mapSize = new Vector_1.default(this.canvasWidth, this.canvasHeight);
         this.map = new contour_map_1.default(`${compilationOptions_1.default.forGithubPages ? '/GeographyTasks' : ''}/src/data/russia.jpg`, mapSize);
         this.map.draw(this.mapCanvasManager);
-        this.toolsManager = new tools_manager_1.default(this);
         this.undoButton = new undo_button_1.default(this);
         this.tempCanvasManager.canvas.style.opacity = `${constants_1.default.OPACITY}`;
     }
     initialize() {
-        // eslint-disable-next-line no-mixed-operators
-        let biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
-        if (biggestSide < 1000)
-            biggestSide = 1000;
-        this.canvasWidth = biggestSide - biggestSide * 0.0;
-        this.canvasHeight = biggestSide * 0.5;
+        const biggestSide = this.calculateBiggestSide();
         this.canvasesContainer = (this.container.querySelector('.task__canvases'));
         this.canvasesContainer.style.height = `${biggestSide * 0.5}px`;
         const mapCanvas = (this.container.querySelector('.task__map-canvas'));
-        this.mapCanvasManager = new canvas_manager_1.default(mapCanvas, this.canvasWidth, this.canvasHeight);
         const resultCanvas = (this.container.querySelector('.task__result-canvas'));
-        this.resultCanvasManager = new canvas_manager_1.default(resultCanvas, this.canvasWidth, this.canvasHeight);
         const tempCanvas = (this.container.querySelector('.task__temp-canvas'));
-        this.tempCanvasManager = new canvas_manager_1.default(tempCanvas, this.canvasWidth, this.canvasHeight);
         const cursorCanvas = (this.container.querySelector('.task__cursor-canvas'));
-        this.cursorCanvasManager = new canvas_manager_1.default(cursorCanvas, this.canvasWidth, this.canvasHeight);
         const dropdownFormContainer = (this.container.querySelector('.task__dropdown-form'));
-        this.dropdownForm = new dropdown_form_1.default(dropdownFormContainer);
-        this.saveButton = this.container.querySelector('.dropdown-form__save-button');
         const drawingOptionsPanelContainer = (this.container.querySelector('.task__drawing-options-panel'));
+        this.saveButton = this.container.querySelector('.dropdown-form__save-button');
+        this.mapCanvasManager = new canvas_manager_1.default(mapCanvas, this.canvasWidth, this.canvasHeight);
+        this.resultCanvasManager = new canvas_manager_1.default(resultCanvas, this.canvasWidth, this.canvasHeight);
+        this.tempCanvasManager = new canvas_manager_1.default(tempCanvas, this.canvasWidth, this.canvasHeight);
+        this.cursorCanvasManager = new canvas_manager_1.default(cursorCanvas, this.canvasWidth, this.canvasHeight);
+        this.dropdownForm = new dropdown_form_1.default(dropdownFormContainer);
         this.drawingOptionsPanel = new drawing_options_panel_1.default(drawingOptionsPanelContainer, this);
-        this.trySetDrawingFromLocalStorage();
-    }
-    initializeCanvases() {
-    }
-    trySetDrawingFromLocalStorage() {
-        const lastDrawing = localStorage.getItem('lastDrawing');
-        if (lastDrawing) {
-            const img = new Image();
-            img.src = lastDrawing;
-            img.onload = () => {
-                this.resultCanvasManager.context.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-                this.resultCanvasManager.context.globalAlpha = 1;
-                this.resultCanvasManager.context.drawImage(img, 0, 0);
-            };
-        }
     }
     setEventsHandlers() {
         this.cursorCanvasManager.canvas.ondragstart = () => false;
@@ -1796,26 +1830,15 @@ class Task {
         this.cursorCanvasManager.canvas.addEventListener('touchstart', this.handleStartDrawing);
         this.cursorCanvasManager.canvas.addEventListener('mouseover', this.handleCanvasMouseOver);
         // eslint-disable-next-line fsd/no-function-declaration-in-event-listener
-        this.saveButton.addEventListener('click', () => {
-            const can3 = document.createElement('canvas');
-            can3.width = this.mapCanvasManager.width;
-            can3.height = this.mapCanvasManager.height;
-            const ctx3 = can3.getContext('2d');
-            ctx3.drawImage(this.mapCanvasManager.canvas, 0, 0);
-            ctx3.globalAlpha = 0.5;
-            ctx3.drawImage(this.resultCanvasManager.canvas, 0, 0);
-            ctx3.globalAlpha = 1;
-            let blobImage;
-            can3.toBlob((blob) => {
-                blobImage = blob;
-            });
-            const timerId = setInterval(() => {
-                if (blobImage) {
-                    clearInterval(timerId);
-                    file_saver_1.saveAs(blobImage, 'pretty image.png');
-                }
-            }, 500);
-        });
+        this.saveButton.addEventListener('click', this.handleSaveButton);
+    }
+    calculateBiggestSide() {
+        let biggestSide = document.documentElement.clientWidth > document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
+        if (biggestSide < 1000)
+            biggestSide = 1000;
+        this.canvasWidth = biggestSide - biggestSide * 0.0;
+        this.canvasHeight = biggestSide * 0.5;
+        return biggestSide;
     }
     extractMousePosition(event) {
         let x;
@@ -1842,66 +1865,22 @@ exports.default = Task;
 
 /***/ }),
 
-/***/ "./src/components/task/tools-manager.ts":
-/*!**********************************************!*\
-  !*** ./src/components/task/tools-manager.ts ***!
-  \**********************************************/
+/***/ "./src/components/task/types/brush-type.ts":
+/*!*************************************************!*\
+  !*** ./src/components/task/types/brush-type.ts ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const constants_1 = __importDefault(__webpack_require__(/*! ../../assets/constants */ "./src/assets/constants.ts"));
-const brush_type_1 = __importDefault(__webpack_require__(/*! ./brush-type */ "./src/components/task/brush-type.ts"));
-class ToolsManager {
-    constructor(task) {
-        this.brushRadius = constants_1.default.BRUSH_RADIUS;
-        this.opacity = constants_1.default.OPACITY;
-        this.brushType = brush_type_1.default.brush;
-        this.setEventsHandlers = () => {
-            this.task.onStartDrawing.subscribe(this.mouseDown);
-            this.task.onContinuingDrawing.subscribe(this.mouseMove);
-            this.task.onDrawingEnding.subscribe(this.mouseUp);
-            this.task.onMouseOver.subscribe(this.mouseOver);
-            this.task.onMouseMove.subscribe(this.mouseOver);
-            this.task.onMouseOver.subscribe(this.mouseOut);
-        };
-        this.mouseDown = (args) => {
-            this.task.tempCanvasManager.canvas.style.opacity = `${this.opacity}`;
-            if (this.brushType === brush_type_1.default.brush)
-                this.task.tempCanvasManager.beginDrawing(args.data.mousePosition, this.brushRadius);
-            else if (this.brushType === brush_type_1.default.eraser)
-                this.task.resultCanvasManager.erase(args.data.mousePosition, this.brushRadius);
-        };
-        this.mouseMove = (args) => {
-            if (this.brushType === brush_type_1.default.brush)
-                this.task.tempCanvasManager.continuousDrawing(args.data.mousePosition, this.brushRadius);
-            else if (this.brushType === brush_type_1.default.eraser)
-                this.task.resultCanvasManager.erase(args.data.mousePosition, this.brushRadius);
-        };
-        this.mouseUp = () => {
-            this.task.resultCanvasManager.context.globalAlpha = this.opacity;
-            this.task.resultCanvasManager.context.drawImage(this.task.tempCanvasManager.canvas, 0, 0);
-            this.task.tempCanvasManager.context.clearRect(0, 0, this.task.resultCanvasManager.width, this.task.resultCanvasManager.height);
-        };
-        this.mouseOver = (args) => {
-            this.task.cursorCanvasManager.drawBrush(args.data.mousePosition, this.brushRadius, this.brushType);
-        };
-        this.mouseOut = () => {
-            this.task.cursorCanvasManager.context.clearRect(0, 0, this.task.cursorCanvasManager.width, this.task.cursorCanvasManager.height);
-        };
-        this.task = task;
-        this.initialize();
-        this.setEventsHandlers();
-    }
-    initialize() {
-    }
-}
-exports.default = ToolsManager;
+var BrushType;
+(function (BrushType) {
+    BrushType[BrushType["brush"] = 0] = "brush";
+    BrushType[BrushType["eraser"] = 1] = "eraser";
+})(BrushType || (BrushType = {}));
+exports.default = BrushType;
 
 
 /***/ }),
@@ -1949,10 +1928,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-useless-return */
-const linked_list_1 = __importDefault(__webpack_require__(/*! ../../assets/LinkedList/linked-list */ "./src/assets/LinkedList/linked-list.ts"));
+const linked_list_1 = __importDefault(__webpack_require__(/*! ../../assets/linked-list/linked-list */ "./src/assets/linked-list/linked-list.ts"));
 __webpack_require__(/*! ./undo-button.scss */ "./src/components/undo-button/undo-button.scss");
 class UndoButton {
     constructor(task) {
+        this.trySetDrawingFromLocalStorage = () => {
+            const lastDrawing = localStorage.getItem('lastDrawing');
+            if (lastDrawing) {
+                const img = new Image();
+                img.src = lastDrawing;
+                img.onload = () => {
+                    this.task.resultCanvasManager.context.clearRect(0, 0, this.task.canvasWidth, this.task.canvasHeight);
+                    this.task.resultCanvasManager.context.globalAlpha = 1;
+                    this.task.resultCanvasManager.context.drawImage(img, 0, 0);
+                    this.saveLastDrawingState();
+                };
+            }
+        };
         this.handleButtonClick = () => {
             this.undo();
         };
@@ -1971,7 +1963,7 @@ class UndoButton {
         this.drawingStates = new linked_list_1.default();
         this.initialize();
         this.setEventsHandlers();
-        this.saveLastDrawingState();
+        this.trySetDrawingFromLocalStorage();
     }
     initialize() {
         this.button = this.task.container.querySelector('.undo-button');
@@ -2127,4 +2119,4 @@ const task = new task_1.default(container);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=demo.js.map?v=2cbe2d05e5d238ea5589
+//# sourceMappingURL=demo.js.map?v=c5111dded5b450d24b2e
